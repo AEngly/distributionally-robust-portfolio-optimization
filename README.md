@@ -4,4 +4,8 @@ This repository will hold the implementations and data sources related to my mas
 
 ## Implementation of Classical Index Tracking
 
-In this section, I attempt to reproduce results from 
+In this section, I attempt to reproduce results from the paper "Optimal construction and reblancing of index-tracking portfolios" by O. Strub, P. Baumann.
+
+### Description of Data
+
+
