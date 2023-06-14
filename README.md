@@ -8,4 +8,6 @@ In this section, I attempt to reproduce results from the paper "Optimal construc
 
 ### Description of Data
 
+The data can be downloaded here: https://www.brunel.ac.uk/~mastjjb/jeb/info.html. Alternatively, it can be found in the "Data" directory.
+
 
