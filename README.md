@@ -10,10 +10,10 @@ In this section, I attempt to reproduce results from the paper "Optimal construc
 
 The data can be downloaded here: https://www.brunel.ac.uk/~mastjjb/jeb/info.html. Alternatively, it can be found in the "Data" directory.
 
-The data can be grapped on Linux-based operation systems with the command: 
-
-curl -o file.pdf https://your-domain-name/long-file-name.pdf
+The data can be grapped on Linux-based operation systems with the command specified below: 
 
 ```
-curl -o file.pdf https://your-domain-name/long-file-name.pdf
-```python
+curl -o indtrack1.txt http://people.brunel.ac.uk/~mastjjb/jeb/orlib/files/indtrack1.txt
+```
+
+The number can be changed and ranges from 1 to 8.
