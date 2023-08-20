@@ -1,0 +1,31 @@
+Task ''
+    # Written by MOSEK v10.0.17
+    # problemtype: Conic Problem
+    # number of linear variables: 6
+    # number of linear constraints: 1
+    # number of  old-style cones: 0
+    # number of positive semidefinite variables: 0
+    # number of positive semidefinite matrixes: 0
+    # number of affine conic constraints: 2
+    # number of disjunctive constraints: 0
+    # number scalar affine expressions/nonzeros : 6/6
+    # number of old-style A nonzeros: 3
+Objective obj
+    Minimize + x4 + x5 + x6
+Constraints
+    c1 [1] + x1 + x2 + 2 x3
+    k1 [QUAD(3)]
+        @ac1: + x4
+        @ac2: + x1
+        @ac3: + x2
+    k2 [RQUAD(3)]
+        @ac4: + x5
+        @ac5: + x6
+        @ac6: + x3
+Variables
+    x4
+    x1 [0;+inf]
+    x2 [0;+inf]
+    x5
+    x6
+    x3 [0;+inf]

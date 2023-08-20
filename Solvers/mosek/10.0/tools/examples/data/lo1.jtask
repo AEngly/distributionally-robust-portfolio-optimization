@@ -1,0 +1,34 @@
+{
+   "$schema":"http://mosek.com/json/schema#",
+   "Task/name":"",
+   "Task/INFO":{"numvar":4,"numcon":3,"numcone":0,"numbarvar":0,"numanz":9,"numsymmat":0,"numafe":0,"numfnz":0,"numacc":0,"numdjc":0,"numdom":0,"mosekver":[10,0,17]},
+   "Task/data":{
+      "var":{
+         "name":["x1","x2","x3","x4"],
+         "bk":["lo","ra","lo","lo"],
+         "bl":[0,0,0,0],
+         "bu":[1e+30,10,1e+30,1e+30],
+         "type":["cont","cont","cont","cont"]
+      },
+      "con":{
+         "name":["c1","c2","c3"],
+         "bk":["fx","lo","up"],
+         "bl":[30,15,-1e+30],
+         "bu":[30,1e+30,25]
+      },
+      "objective":{
+         "sense":"max",
+         "name":"obj",
+         "c":{
+            "subj":[0,1,2,3],
+            "val":[3,1,5,1]
+         },
+         "cfix":0
+      },
+      "A":{
+         "subi":[0,0,0,1,1,1,1,2,2],
+         "subj":[0,1,2,0,1,2,3,1,3],
+         "val":[3,1,2,2,1,3,1,2,3]
+      }
+   }
+}

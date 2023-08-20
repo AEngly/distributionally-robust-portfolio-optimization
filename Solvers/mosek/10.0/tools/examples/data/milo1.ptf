@@ -1,0 +1,16 @@
+Task ''
+    # Written by MOSEK v10.0.13
+    # problemtype: Linear Problem
+    # number of linear variables: 2
+    # number of linear constraints: 2
+    # number of old-style A nonzeros: 4
+Objective obj
+    Maximize + x1 + 6.4e-1 x2
+Constraints
+    c1 [-inf;2.5e+2] + 5e+1 x1 + 3.1e+1 x2
+    c2 [-4;+inf] + 3 x1 - 2 x2
+Variables
+    x1 [0;+inf]
+    x2 [0;+inf]
+Integers
+    x1 x2

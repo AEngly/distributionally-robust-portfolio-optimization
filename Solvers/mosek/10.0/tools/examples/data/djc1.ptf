@@ -1,0 +1,32 @@
+Task djc1
+Objective ''
+    Minimize + 2 'x[0]' + 'x[1]' + 3 'x[2]' + 'x[3]'
+Constraints
+    @c0 [-10;+inf] + 'x[0]' + 'x[1]' + 'x[2]' + 'x[3]'
+    @D0 [OR]
+        [AND]
+            [NEGATIVE(1)]
+                 + 'x[0]' - 2 'x[1]' + 1
+            [ZERO(2)]
+                 + 'x[2]'
+                 + 'x[3]'
+        [AND]
+            [NEGATIVE(1)]
+                 + 'x[2]' - 3 'x[3]' + 2
+            [ZERO(2)]
+                 + 'x[0]'
+                 + 'x[1]'
+    @D1 [OR]
+        [ZERO(1)]
+             + 'x[0]' - 2.5
+        [ZERO(1)]
+             + 'x[1]' - 2.5
+        [ZERO(1)]
+             + 'x[2]' - 2.5
+        [ZERO(1)]
+             + 'x[3]' - 2.5
+Variables
+    'x[0]'
+    'x[1]'
+    'x[2]'
+    'x[3]'
