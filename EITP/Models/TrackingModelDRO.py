@@ -8,10 +8,10 @@ from EITP.Models.InvestmentStrategy import InvestmentStrategy;
 
 class TrackingModelDRO(InvestmentStrategy):
 
-    def __init__(self, returnsAssets=np.zeros((0,0)), returnsIndex=np.zeros((0,0)), beta=0.95, rho=0.00, alpha=0.00, rf=0.02):
+    def __init__(self, returnsAssets=np.zeros((0,0)), returnsIndex=np.zeros((0,0)), beta=0.95, rho=0.00, alpha=0.00):
 
         # Call constructor from parent class (see InvestmentStrategy.py)
-        super().__init__(returnsAssets=returnsAssets, returnsIndex=returnsIndex, beta=beta, rho=rho, alpha=alpha, rf=rf)
+        super().__init__(returnsAssets=returnsAssets, returnsIndex=returnsIndex, beta=beta, rho=rho, alpha=alpha)
 
     # Method: Implement the model with MOSEK Fusion API
     def solve(self, epsCollection=np.linspace(10**(-8), 10**(-1), 100), rhoCollection=np.array([2]),
@@ -135,8 +135,7 @@ class TrackingModelDRO(InvestmentStrategy):
 
         # Processing of returns
         self.N, self.M = returnsAssets.shape
-        self.returnsAssets = np.concatenate((np.ones((self.N,1))*self.rf, returnsAssets), axis=1)
-        self.M += 1
+        self.returnsAssets = returnsAssets
         self.returnsIndex = returnsIndex
         self.returnsIndexEnhanced = returnsIndex + self.alpha
 
