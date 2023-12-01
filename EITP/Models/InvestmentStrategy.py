@@ -5,11 +5,10 @@ import matplotlib.pyplot as plt
 # Definition of parent class
 class InvestmentStrategy:
 
-    def __init__(self, returnsAssets=np.zeros((0,0)), returnsIndex=np.zeros((0,0)), beta=0.95, rho=2, alpha=0.00, rf=0.02):
+    def __init__(self, returnsAssets=np.zeros((0,0)), returnsIndex=np.zeros((0,0)), beta=0.95, alpha=0.00, rf=0.02):
 
         # Modify index specificaitons
         self.alpha = alpha
-        self.rf = rf
         self.alphaAnnualy = (1 + alpha)**(252) - 1
         self.beta = beta
         self.rho = rho
@@ -58,18 +57,22 @@ class InvestmentStrategy:
         self.optimalPortfolio = w;
 
     # Method 1: Allow user to change data
-    def setData(self, returnsAssets = np.zeros((0,0)), returnsIndex = np.zeros((0,0)), rf=0.02, alpha=0.00):
+    def setData(self, returnsAssets = np.zeros((0,0)), returnsIndex = np.zeros((0,0)), beta=0.95, rho=2, alpha=0.00):
 
         # Modify index specificaitons
-        self.alpha = alpha;
-        self.rf = rf;
+        self.alpha = alpha
+        self.alphaAnnualy = (1 + alpha)**(252) - 1
+        self.beta = beta
+        self.rho = rho
 
         # Processing of returns
         self.N, self.M = returnsAssets.shape;
-        self.returnsAssets = np.concatenate((np.ones((self.T,1))*self.rf, returnsAssets), axis=1);
-        self.M += 1;
+        self.returnsAssets = returnsAssets;
         self.returnsIndex = returnsIndex;
         self.returnsIndexEnhanced = returnsIndex + self.alpha;
+
+        # Recalculate probability weights
+        self.probabilityWeighting(weighting="EqualWeights")
 
         # Define excess returns
         self.excessReturns = (self.returnsAssets.T - self.returnsIndexEnhanced).T
@@ -84,72 +87,10 @@ class InvestmentStrategy:
         else:
             print("The specified type '{}' is unknown to the system. Please check the documentation.".format(weighting));
 
-    # Method 3: Plot In-Sample results (and save file)
-    def IS(self, configuration={}, dataName="SP500", saveFile=None, plot=True):
-
-        if len(configuration.keys()) != 0:
-
-            # Implement overleaf table
-            print(self);
-
-        # Selected data
-        selectedData = np.concatenate((np.zeros((1, self.M)), self.returnsAssets), axis=0);
-        selectedData = np.cumprod(selectedData + 1,axis=0) * 100;
-
-        # Plot index
-        index = np.transpose(self.returnsIndex);
-        index = np.cumprod(index + 1);
-        index = np.insert(index, 0, 1.0, axis=0) * 100;
-
-        # Plot enhanced index
-        enhancedIndex = np.transpose(self.returnsIndexEnhanced);
-        enhancedIndex = np.cumprod(enhancedIndex + 1);
-        enhancedIndex = np.insert(enhancedIndex, 0, 1.0, axis=0) * 100;
-
-        # Compute portfolio development
-        portfolio = np.ones((self.N+1,1))*100;
-        optimalPortfolio = self.optimalPortfolio;
-
-        for t in range(0,self.N):
-
-            portfolio[t+1] = portfolio[t]*(1 + np.dot(self.returnsAssets[t,:], optimalPortfolio));
-            updatedWeights = (1 + self.returnsAssets[t,:])*optimalPortfolio;
-            optimalPortfolio = updatedWeights/np.sum(updatedWeights);
-
-
-        if plot:
-
-            # Create figure
-            fig, ax = plt.subplots(figsize=(16, 10));
-            ax.plot(selectedData[:,selectedData[-1,:] < 300], alpha = 0.3);
-            ax.plot(index, label=r'Benchmark ({})'.format(dataName), linestyle='--', linewidth=3, color = 'black', alpha=1.0)
-            ax.plot(enhancedIndex, label=r'Enhanced Benchmark ({} + {}% p.a.)'.format(dataName, round(self.alphaAnnualy*100,2)), linestyle='-.', linewidth=3, color = 'blue', alpha=1.0)
-            ax.plot(portfolio, label=r'Portfolio [$\rho$ = {}, $\beta = {}$]'.format(round(self.rho, 2), round(self.beta, 2)), linestyle='-', linewidth=3, color = 'red', alpha=1.0);
-
-
-            # Title and labels
-            ax.set_xlabel("Periods");
-            ax.set_ylabel("Index (period 0 = 100)");
-
-            # Legend
-            ax.legend(loc="best", fontsize="large");
-
-            # Grid lines
-            ax.grid(True, linestyle='-', linewidth=0.3);
-
-            # Save results
-            if saveFile is not None:
-                plt.savefig('./Plots/{}.png'.format(saveFile), dpi=200);
-
-            # Show plot
-            plt.show()
-
-        # Return the necessary data
-        return selectedData, index, enhancedIndex, portfolio;
-
     # Method 5: Plot Out-of-Sample results (and save file)
-    def OoS(self, returnsAssets, returnsIndex, configuration={}, dataName="SP500", saveFile=None, plot=True, ylim=[90,110]):
+    def testPortfolio(self, returnsAssets, returnsIndex, dataName="SP500", saveFile=None, plot=True, ylim=[90,110]):
 
+        # Get dimensions
         N,M = returnsAssets.shape;
         returnsAssets = np.concatenate((np.ones((N,1))*self.rf, returnsAssets), axis=1);
         M += 1;
@@ -168,7 +109,7 @@ class InvestmentStrategy:
         enhancedIndex = np.cumprod(enhancedIndex + 1);
         enhancedIndex = np.insert(enhancedIndex, 0, 1.0, axis=0) * 100;
 
-        # Plot portfolio
+
         # Compute portfolio development
         portfolio = np.ones((N+1,1))*100;
         optimalPortfolio = self.optimalPortfolio;
@@ -179,6 +120,7 @@ class InvestmentStrategy:
             updatedWeights = (1 + returnsAssets[t,:])*optimalPortfolio;
             optimalPortfolio = updatedWeights/np.sum(updatedWeights);
 
+        # Plot portfolio
         if plot:
 
             # Create figure
@@ -198,9 +140,6 @@ class InvestmentStrategy:
 
             # Grid lines
             ax.grid(True, linestyle='-', linewidth=0.3);
-
-            # Color palette
-            colors = plt.cm.viridis(np.linspace(0, 1, self.N+1));
 
             # Save results
             if saveFile is not None:

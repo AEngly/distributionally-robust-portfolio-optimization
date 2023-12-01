@@ -1,0 +1,48 @@
+------- (id, experiment): (1, 1) ------- 
+fileName: ExcessModelDRO_WassersteinWeights
+nSimulations: 200
+nAssets: 313
+nEps: 31
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 4
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0.7, 30)), axis=0)
+betaCollection: 0.9
+rhoCollection: 2
+trainingSizes: 63,126,189,252
+nStatistics: ['WassersteinRadius', 'Objective', 'DownsideSemiStandardDeviation', 'RMSE', 'MAD', 'VaR', 'CVaR', 'ExcessReturnAverage', 'ExcessReturn', 'SortinoIndex', 'BeatBenchmarkRatio', 'TotalReturn', 'AverageReturn', 'P5', 'P10', 'P90', 'P95']
+recover: 4,31,313
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: ExcessModelDRO_IS
+nSimulations: 200
+nAssets: 313
+nEps: 31
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 4
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0.7, 30)), axis=0)
+betaCollection: 0.9
+rhoCollection: 2
+trainingSizes: 63,126,189,252
+nStatistics: WassersteinRadius,Objective,DownsideSemiStandardDeviation,RMSE,MAD,VaR,CVaR,ExcessReturnAverage,ExcessReturn,SortinoIndex,BeatBenchmarkRatio,TotalReturn,AverageReturn,P5,P10,P90,P95
+recover: 4,200,31,16
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: ExcessModelDRO_OoS
+nSimulations: 200
+nAssets: 313
+nEps: 31
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 4
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0.7, 30)), axis=0)
+betaCollection: 0.9
+rhoCollection: 2
+trainingSizes: 63,126,189,252
+nStatistics: WassersteinRadius,Objective,DownsideSemiStandardDeviation,RMSE,MAD,VaR,CVaR,ExcessReturnAverage,ExcessReturn,SortinoIndex,BeatBenchmarkRatio,TotalReturn,AverageReturn,P5,P10,P90,P95
+recover: 4,200,31,16
+
+

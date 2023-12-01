@@ -13,11 +13,24 @@ import scipy.stats as sps
 
 class PerformanceMetrics:
 
-    def __init__(self, portfolio, indexOoS, enhancedIndexOoS):
+    def __init__(self, portfolio=np.ones(100)*5, indexOoS=np.ones(100)*5, enhancedIndexOoS=np.ones(100)*5):
 
+        # Set value arrays
         self.portfolio = portfolio;
         self.index = indexOoS;
         self.enhancedIndex = enhancedIndexOoS;
+
+        # Compute returns to compare
+        self.returnEnhancedIndex = np.array([(self.enhancedIndex[i+1]/self.enhancedIndex[i]-1) for i in range(len(self.enhancedIndex)-1)]);
+        self.returnIndex = np.array([(self.index[i+1]/self.index[i]-1) for i in range(len(self.index)-1)]);
+        self.returnsPortfolio = np.array([(self.portfolio[i+1]/self.portfolio[i]-1) for i in range(len(self.portfolio)-1)]);
+
+    def setData(self, portfolio=np.ones(100)*5, index=np.ones(100)*5, enhancedIndex=np.ones(100)*5):
+
+        # Set value arrays
+        self.portfolio = portfolio;
+        self.index = index;
+        self.enhancedIndex = enhancedIndex;
 
         # Compute returns to compare
         self.returnEnhancedIndex = np.array([(self.enhancedIndex[i+1]/self.enhancedIndex[i]-1) for i in range(len(self.enhancedIndex)-1)]);

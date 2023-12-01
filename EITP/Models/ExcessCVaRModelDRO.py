@@ -8,12 +8,12 @@ from EITP.Models.InvestmentStrategy import InvestmentStrategy;
 
 class ExcessCVaRModelDRO(InvestmentStrategy):
 
-    def __init__(self, returnsAssets=np.zeros((0,0)), returnsIndex=np.zeros((0,0)), beta=0.95, rho=0.00, alpha=0.00, rf=0.002):
+    def __init__(self, returnsAssets=np.ones((10,9)), returnsIndex=np.ones((10,1)), beta=0.95, rho=0.00, alpha=0.00, rf=0.002):
 
         # Call constructor from parent class (see InvestmentStrategy.py)
         super().__init__(returnsAssets=returnsAssets, returnsIndex=returnsIndex, beta=beta, rho=rho, alpha=alpha, rf=rf)
 
-    # Method 3: Run model
+    # Method: Solve model with MOSEK Fusion API
     def solve(self, epsCollection=np.linspace(10**(-8), 10**(-1), 100), rhoCollection=np.array([2]),
               betaCollection=np.array([0.95]), progressBar=True):
 
@@ -43,7 +43,7 @@ class ExcessCVaRModelDRO(InvestmentStrategy):
 
         # Objective
         firstTerm = Expr.mul(eps, _lambda);
-        secondTerm = Expr.mul(1/N, Expr.sum(s));
+        secondTerm = Expr.dot(self.pi, s);
         J = Expr.add(firstTerm, secondTerm);
         MODEL.objective('obj', ObjectiveSense.Minimize, J);
 
@@ -102,6 +102,7 @@ class ExcessCVaRModelDRO(InvestmentStrategy):
 
                             # Save row
                             row = pd.DataFrame([MODEL.primalObjValue(), eps.getValue()[0], rho.getValue()[0], -1/betaMod.getValue()[0]+1, excessReturns, VaR, CVaR] + list(w.level()), index=columns, columns=[0]);
+
                             # Concatenate with exisiting results
                             results = pd.concat([results, row.T], axis=0);
 
@@ -115,6 +116,9 @@ class ExcessCVaRModelDRO(InvestmentStrategy):
         self.optimalPortfolio = results.iloc[0, :];
         self.optimalPortfolio = self.optimalPortfolio.values[len(recordedValues):];
         self.isOptimal = True;
+
+        # Get rid of model
+        MODEL.dispose()
 
         # Set index
         results.index = [i for i in range(0, len(results))];
@@ -135,10 +139,10 @@ class ExcessCVaRModelDRO(InvestmentStrategy):
         # Compute the objective
         portfolioReturns = np.dot(self.excessReturns, w)
         portfolioLosses = -portfolioReturns
-        estimateTE = np.mean(np.abs(portfolioReturns))
+        estimateExcessReturns = np.mean(portfolioReturns)
         estimateVaR = -np.quantile(portfolioReturns, 1-self.beta)
         estimateCVaR = estimateVaR + 1/(1-self.beta)*np.mean(np.maximum(portfolioLosses - estimateVaR, 0))
-        J = estimateTE + self.rho*estimateCVaR
+        J = -estimateExcessReturns + self.rho*estimateCVaR
 
         # Return J
         return J;

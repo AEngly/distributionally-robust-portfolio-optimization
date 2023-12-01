@@ -1,35 +1,32 @@
 """
 Author: Andreas Heidelbach Engly (s170303)
-Purpose: This file generates the results for chapter 5 of the thesis.
+Purpose: This file generates the results for Wasserstein-based DRO of ExcessCVaR model used in the thesis.
 
 Inputs:
-- In order to get the right results, the model parameters must be modified.
+- In order to get the right results, the model parameters must be modified (look e.g. at ExperimentLog.txt)).
 
 Outputs:
-- The results are saved into .csv-files.
-
+- The results are saved into .csv-files. They are reshaped into 1D-arrays and need to be recovered with dimension specified in ExperimentLog.txt.
 """
 
 # Load dependencies
 import datetime as dt
 import numpy as np
-import pandas as pd
 from mosek.fusion import *
 from tqdm import tqdm
-import scipy.stats as sps
 import math
-import time
 import gc
+from sys import getsizeof
+from tqdm import tqdm
 
 # Imports from module
 from EITP.Models.TrackingModelSAA import TrackingModelSAA as TrackingModelSAA;
 from EITP.Models.ExcessCVaRModelSAA import ExcessCVaRModelSAA as ExcessCVaRModelSAA;
 from EITP.Models.TrackingModelDRO import TrackingModelDRO as TrackingModelDRO;
 from EITP.Models.ExcessCVaRModelDRO import ExcessCVaRModelDRO as ExcessCVaRModelDRO;
-from EITP.Backtesting.VisualComparison import Visualizer;
-from EITP.Backtesting.QuantitativeComparison import PerformanceMetrics;
 from EITP.PerformanceEvaluation.QuantitativeStatistics import PerformanceMetrics;
 from EITP.Data.DataLoader import DataLoader;
+from EITP.Auxiliaries.Logger import write_parameters_to_file;
 
 # Print that script is starting
 print("\n#########################################################################################\n")
@@ -53,6 +50,7 @@ assets = priceData.iloc[:,2:]
 assetsReturns = priceData.iloc[:,2:].pct_change().dropna(axis=0).values
 
 # Then we can free priceData from the memory
+del dataLoader
 del priceData
 gc.collect()
 
@@ -61,17 +59,17 @@ gc.collect()
 #########################################################################################
 
 # Specify whether to run experiments or not
-runTests = False
+runTests = True
 runExperiment1 = False
-runExperiment2 = True
+runExperiment2 = False
 
 # Specify number of simulations in each iteration of all experiments
 nSimulations = 200
 
 # Specify central parameters
 rho = 2
-beta = 0.95
-excessReturnAnually = 0.0511
+beta = 0.90
+excessReturnAnually = 0
 rfAnnualy = 0.02
 
 #########################################################################################
@@ -81,13 +79,15 @@ rfAnnualy = 0.02
 if runTests:
 
     # Set model parameters
-    epsCollection = 10**np.linspace(-4, 0.5, 30)
-    totalEps = len(epsCollection)
+    totalEps = 30
+    startEps = -6
+    endEps = 0.5
+    epsCollection = np.concatenate(([0], 10**np.linspace(startEps, endEps, totalEps)), axis=0)
     alphaDaily = (1 + excessReturnAnually)**(1/252)-1
     rfDaily = (1 + rfAnnualy)**(1/252)-1
 
     # Run a simple test
-    startIndex = 500
+    startIndex = 230
     endIndex = startIndex + 700
     print("\nTesting SAA:\n")
     modelSAA = ExcessCVaRModelSAA(returnsAssets=assetsReturns[startIndex:endIndex,:],
@@ -100,15 +100,23 @@ if runTests:
                 betaCollection=np.array([beta]), progressBar=True)
     print(resultsSAA)
     print("\nTesting DRO:\n")
+
     modelDRO = ExcessCVaRModelDRO(returnsAssets=assetsReturns[startIndex:endIndex,:],
                                 returnsIndex=indexReturns[startIndex:endIndex],
                                 beta=beta,
                                 rho=rho,
                                 alpha=alphaDaily,
                                 rf=rfDaily)
-    resultsDRO = modelDRO.solve(epsCollection=np.array([0,10**(-3), 10**(-1)]), rhoCollection=np.array([rho]),
+    resultsDRO = modelDRO.solve(epsCollection=epsCollection, rhoCollection=np.array([rho]),
                 betaCollection=np.array([beta]), progressBar=True)
     print(resultsDRO)
+
+    # Remove MODEL from memory
+    del modelSAA
+    del modelDRO
+    del resultsSAA
+    del resultsDRO
+    gc.collect()
 
 #########################################################################################
 #                Experiment 1 (Sensitivity to Wasserstein Radius)
@@ -119,30 +127,27 @@ if runExperiment1:
     print("\nRunning Experiment 1:\n")
 
     # -------- MODEL ----------
-
     alphaDaily = (1 + excessReturnAnually)**(1/252)-1
     rfDaily = (1 + rfAnnualy)**(1/252)-1
-    epsCollection = 10**np.linspace(-4, 0.5, 30)
-    epsCollection = np.concatenate(([0], epsCollection), axis=0)
-    totalEps = len(epsCollection)
     rhoCollection=np.array([rho])
     betaCollection=np.array([beta])
 
     # -------- ADJUSTABLE ---------
-
-    #trainingSizes = [126, 189, 252, 378, 504]
-    trainingSizes = [126]                           # Train on 6 and 9 months of data (2 and 3 quarter)
-    testSize = 126                                  # Test on 6 months of data (2 quarter)
+    totalEps = 50
+    startEps = -6
+    endEps = 0.5
+    epsCollection = np.concatenate(([0], 10**np.linspace(startEps, endEps, totalEps)), axis=0)
+    trainingSizes = [63, 126, 189, 252, 504]
+    testSize = 126                                  # Test on 6 months of data (2 quarters)
 
     # -------- PREPARE DATA COLLECTION --------
-
     columns =    ['WassersteinRadius',
                 'Objective',
                 'DownsideSemiStandardDeviation',
                 'RMSE',
                 'MAD',
-                'VaR-{}'.format(betaCollection[0]),
-                'CVaR-{}'.format(betaCollection[0]),
+                'VaR',
+                'CVaR',
                 'ExcessReturnAverage',
                 'ExcessReturn',
                 'SortinoIndex',
@@ -160,124 +165,140 @@ if runExperiment1:
 
     # -------- START ROLLING-WINDOW --------
 
-    # Initialize progress bar (tqdm causes sempahore leaks, so it is disabled)
-    currentIter = 0
-    maxIter = nSimulations*len(trainingSizes)
-    iterPerSecond = 0
-    secPerIter = 0
-    timeElapsed = 0
-    timeRemaining = 0
-    start = time.time()
+    # Initialize model (will never use more than 1000 observations)
+    MODEL = ExcessCVaRModelDRO(returnsAssets=assetsReturns[:1000,:], returnsIndex=indexReturns[:1000], beta=beta, rho=rho, alpha=alphaDaily, rf=rfDaily);
+    PM = PerformanceMetrics()
 
-    # Start the actual experiment
-    for h, trainingSize in enumerate(trainingSizes):
+    with tqdm(total=nSimulations*len(trainingSizes), disable=False) as pbar:
 
-        windowSize = trainingSize + testSize
-        rollingMax = totalObservations - windowSize
-        slideSize = int(rollingMax/nSimulations)
-        increments = np.arange(0,rollingMax, slideSize)[:nSimulations]
-        totalIncrements = len(increments)
+        # Start the actual experiment
+        for h, trainingSize in enumerate(trainingSizes):
 
-        for i, shift in enumerate(increments):
+            windowSize = trainingSize + testSize
+            rollingMax = totalObservations - windowSize
+            slideSize = int(rollingMax/nSimulations)
+            increments = np.arange(0,rollingMax, slideSize)[:nSimulations]
+            totalIncrements = len(increments)
 
-            # Shift the rolling window
-            startIndex = shift
-            endIndex = shift+windowSize-testSize
+            for i, shift in enumerate(increments):
 
-            # Instantiate the model
-            MODEL = ExcessCVaRModelDRO(returnsAssets=assetsReturns[startIndex:endIndex,:],
-                            returnsIndex=indexReturns[startIndex:endIndex],
-                            beta=beta,
-                            rho=rho,
-                            alpha=alphaDaily,
-                            rf=rfDaily)
+                # Shift the rolling window
+                startIndex = shift
+                endIndex = shift+windowSize-testSize
 
-            # Solve it for all epsilon
-            results = MODEL.solve(epsCollection=epsCollection, rhoCollection=rhoCollection,
-                                    betaCollection=betaCollection, progressBar=False);
+                # Instantiate the model
+                MODEL.setData(returnsAssets=assetsReturns[startIndex:endIndex,:], returnsIndex=indexReturns[startIndex:endIndex], beta=beta, rho=rho, alpha=alphaDaily, rf=rfDaily)
 
-            for j in range(totalEps):
+                # Solve it for all epsilon
+                results = MODEL.solve(epsCollection=epsCollection, rhoCollection=rhoCollection,
+                                        betaCollection=betaCollection, progressBar=False);
 
-                # Set weights
-                w = np.array(results.iloc[j,7:].values, dtype=np.float64)
+                for j in range(totalEps):
 
-                # Save weights
-                Weights_vs_Wasserstein[h,j,:] += w
+                    # Set weights (see displacement factor - in this case 7 - from the model file)
+                    w = np.array(results.iloc[j,7:].values, dtype=np.float32)
 
-                # Set optimal portfolio
-                MODEL.setOptimalPortfolio(w)
+                    # Save weights
+                    Weights_vs_Wasserstein[h,j,:] += w
 
-                # Test in-sample
-                assetsPathsIS, indexIS, enhancedIndexIS, portfolioIS = MODEL.IS(plot=False, dataName="S&P500")
+                    # Set optimal portfolio
+                    MODEL.setOptimalPortfolio(w)
 
-                # Test out-of-sample
-                assetsPathsOoS, indexOoS, enhancedIndexOoS, portfolioOoS = MODEL.OoS(assetsReturns[windowSize-testSize:windowSize,:],
-                                                                                        indexReturns[windowSize-testSize:windowSize], plot=False,
-                                                                                        dataName="S&P500")
+                    # Test in-sample
+                    assetsPathsIS, indexIS, enhancedIndexIS, portfolioIS = MODEL.testPortfolio(assetsReturns[startIndex:endIndex,:],
+                                                                                            indexReturns[startIndex:endIndex], plot=False,
+                                                                                            dataName="S&P500")
 
-                # Compute metrics for the first run
-                PM_IS = PerformanceMetrics(portfolioIS, indexIS, enhancedIndexIS)
-                PM_OoS = PerformanceMetrics(portfolioOoS, indexOoS, enhancedIndexOoS)
-                metricsRecordings_IS = PM_IS.getMetrics(rho=rho, beta=beta)
-                metricsRecordings_OoS = PM_OoS.getMetrics(rho=rho, beta=beta)
-                metricsRecordings_IS['Objective'] = results.iloc[j,0]
-                metricsRecordings_OoS['Objective'] = MODEL.approximateObjective(assetsReturns[windowSize-testSize:windowSize,:], indexReturns[windowSize-testSize:windowSize], w)
+                    # Test out-of-sample
+                    assetsPathsOoS, indexOoS, enhancedIndexOoS, portfolioOoS = MODEL.testPortfolio(assetsReturns[endIndex:endIndex+testSize,:],
+                                                                                            indexReturns[endIndex:endIndex+testSize], plot=False,
+                                                                                            dataName="S&P500")
 
-                # Prepare storage of all performance metrics
-                for k, key in enumerate(metricsRecordings_IS):
-                    IS_statistics[h,i,j,k] = metricsRecordings_IS[key]
-                    OoS_statistics[h,i,j,k] = metricsRecordings_OoS[key]
+                    # Compute metrics for the first run
+                    PM.setData(portfolio=portfolioIS, index=indexIS, enhancedIndex=enhancedIndexIS)
+                    metricsRecordings_IS = PM.getMetrics(rho=rho, beta=beta)
+                    PM.setData(portfolio=portfolioOoS, index=indexOoS, enhancedIndex=enhancedIndexOoS)
+                    metricsRecordings_OoS = PM.getMetrics(rho=rho, beta=beta)
+                    metricsRecordings_IS['Objective'] = results.iloc[j,0]
+                    metricsRecordings_OoS['Objective'] = MODEL.approximateObjective(assetsReturns[endIndex:endIndex+testSize,:], indexReturns[endIndex:endIndex+testSize], w)
 
-            # Update progress bar
-            currentIter += 1
-            end = time.time()
-            secPerIter = round(end - start, 2)
-            iterPerSecond = 1/secPerIter
-            timeElapsed += round(secPerIter, 2)
-            timeElapsedMinutes = math.floor(timeElapsed/60)
-            timeElapsedSeconds = math.floor(timeElapsed - timeElapsedMinutes*60)
-            timeRemaining = (maxIter - currentIter)/iterPerSecond
-            timeRemainingMinutes = math.floor(timeRemaining/60)
-            timeRemainingSeconds = math.floor(timeRemaining - timeRemainingMinutes*60)
+                    # Prepare storage of all performance metrics
+                    for k, key in enumerate(metricsRecordings_IS):
+                        IS_statistics[h,i,j,k] = metricsRecordings_IS[key]
+                        OoS_statistics[h,i,j,k] = metricsRecordings_OoS[key]
 
-            # Print the progress bar
-            if currentIter % 10 == 0 and iterPerSecond > 1:
-                print("Activity: Experiment 1 | {}/{} [{}:{}<{}:{}, {}it/s]".format(currentIter, maxIter, str(timeElapsedMinutes).zfill(2), str(timeElapsedSeconds).zfill(2), str(timeRemainingMinutes).zfill(2), str(timeRemainingSeconds).zfill(2), iterPerSecond))
-            if currentIter % 10 == 0 and iterPerSecond <= 1:
-                print("Activity: Experiment 1 | {}/{} [{}:{}<{}:{}, {}s/it]".format(currentIter, maxIter, str(timeElapsedMinutes).zfill(2), str(timeElapsedSeconds).zfill(2), str(timeRemainingMinutes).zfill(2), str(timeRemainingSeconds).zfill(2), secPerIter))
-
-            # Restart timer
-            start = time.time()
+                # Update progress bar
+                pbar.update(1)
 
     # Save training sizes as list for recovery
     aux = "_".join(str(e) for e in trainingSizes)
 
-    # ------- Save for Wasserstein vs Weights -------
-    np.savetxt("./Results/Chapter5_ExcessCVaR/ExcessModelDRO_WassersteinWeights_T_{}_P_{}_{}_S_{}_recover_{}_{}_{}.csv".format(aux,
-                                                                                betaCollection[0],
-                                                                                rhoCollection[0],
-                                                                                nSimulations,
-                                                                                len(trainingSizes),
-                                                                                len(epsCollection),
-                                                                                assetsReturns.shape[1]+1), Weights_vs_Wasserstein.reshape(-1), fmt='%.18e', delimiter=' ')
+    # Create logging string
+    line0 = "fileName: " + "ExcessModelDRO_WassersteinWeights" + "\n"
+    line1 = "nSimulations: " + str(nSimulations) + "\n"
+    line2 = "nAssets: " + str(assetsReturns.shape[1]+1) + "\n"
+    line3 = "nEps: " + str(len(epsCollection)) + "\n"
+    line4 = "nBetas: " + str(len(betaCollection)) + "\n"
+    line5 = "nRhos: " + str(len(rhoCollection)) + "\n"
+    line6 = "nTrainingSizes: " + str(len(trainingSizes)) + "\n"
+    line7 = "epsCollection: " + "np.concatenate(([0], 10**np.linspace({}, {}, {})), axis=0)".format(startEps, endEps, totalEps) + "\n"
+    line8 = "betaCollection: " + ",".join([str(round(elem,5)) for elem in betaCollection]) + "\n"
+    line9 = "rhoCollection: " + ",".join([str(round(elem,5)) for elem in rhoCollection]) + "\n"
+    line10 = "trainingSizes: " + ",".join([str(round(elem,5)) for elem in trainingSizes]) + "\n"
+    line11 = "nStatistics: " + str(columns) + "\n"
+    line12 = "testSize: " + str(testSize) + "\n"
+    line13 = "recover: " + ",".join([str(elem) for elem in Weights_vs_Wasserstein.shape]) + "\n"
+    parameters = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8 + line9 + line10 + line11 + line12 + line13
 
-    # ------- Save all results -------
-    a,b,c,d = IS_statistics.shape
-    np.savetxt("./Results/Chapter5_ExcessCVaR/Chapter5_Experiment1_ExcessModelDRO_IS_statistics_T_{}_P_{}_{}_S_{}_recover_{}_{}_{}_{}.csv".format(aux,
-                                                                                                        beta,
-                                                                                                        rho,
-                                                                                                        nSimulations,
-                                                                                                        a, b, c, d), IS_statistics.reshape(-1), fmt='%.18e', delimiter=' ')
-    np.savetxt("./Results/Chapter5_ExcessCVaR/Chapter5_Experiment1_ExcessModelDRO_OoS_statistics_T_{}_P_{}_{}_S_{}_recover_{}_{}_{}_{}.csv".format(aux,
-                                                                                                        beta,
-                                                                                                        rho,
-                                                                                                        nSimulations,
-                                                                                                        a, b, c, d), OoS_statistics.reshape(-1), fmt='%.18e', delimiter=' ')
+    # Save results
+    write_parameters_to_file(Weights_vs_Wasserstein.reshape(-1), parameters, file_name="ExcessModelDRO_WassersteinWeights", folder_path="./Results/Chapter5_ExcessCVaR/", expId=1)
 
-    # -------- Set reference counters to 0 and force garbage collection -------- #
+    # Create logging string
+    line0 = "fileName: " + "ExcessModelDRO_IS" + "\n"
+    line1 = "nSimulations: " + str(nSimulations) + "\n"
+    line2 = "nAssets: " + str(assetsReturns.shape[1]+1) + "\n"
+    line3 = "nEps: " + str(len(epsCollection)) + "\n"
+    line4 = "nBetas: " + str(len(betaCollection)) + "\n"
+    line5 = "nRhos: " + str(len(rhoCollection)) + "\n"
+    line6 = "nTrainingSizes: " + str(len(trainingSizes)) + "\n"
+    line7 = "epsCollection: " + "np.concatenate(([0], 10**np.linspace({}, {}, {})), axis=0)".format(startEps, endEps, totalEps) + "\n"
+    line8 = "betaCollection: " + ",".join([str(round(elem,5)) for elem in betaCollection]) + "\n"
+    line9 = "rhoCollection: " + ",".join([str(round(elem,5)) for elem in rhoCollection]) + "\n"
+    line10 = "trainingSizes: " + ",".join([str(round(elem,5)) for elem in trainingSizes]) + "\n"
+    line11 = "nStatistics: " + ",".join(columns) + "\n"
+    line12 = "testSize: " + str(testSize) + "\n"
+    line13 = "recover: " + ",".join([str(elem) for elem in IS_statistics.shape]) + "\n"
+    parameters = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8 + line9 + line10 + line11 + line12 + line13
+
+    # Save results
+    write_parameters_to_file(IS_statistics.reshape(-1), parameters, file_name="ExcessModelDRO_IS", folder_path="./Results/Chapter5_ExcessCVaR/", expId=1)
+
+    # Create logging string
+    line0 = "fileName: " + "ExcessModelDRO_OoS" + "\n"
+    line1 = "nSimulations: " + str(nSimulations) + "\n"
+    line2 = "nAssets: " + str(assetsReturns.shape[1]+1) + "\n"
+    line3 = "nEps: " + str(len(epsCollection)) + "\n"
+    line4 = "nBetas: " + str(len(betaCollection)) + "\n"
+    line5 = "nRhos: " + str(len(rhoCollection)) + "\n"
+    line6 = "nTrainingSizes: " + str(len(trainingSizes)) + "\n"
+    line7 = "epsCollection: " + "np.concatenate(([0], 10**np.linspace({}, {}, {})), axis=0)".format(startEps, endEps, totalEps) + "\n"
+    line8 = "betaCollection: " + ",".join([str(round(elem,5)) for elem in betaCollection]) + "\n"
+    line9 = "rhoCollection: " + ",".join([str(round(elem,5)) for elem in rhoCollection]) + "\n"
+    line10 = "trainingSizes: " + ",".join([str(round(elem,5)) for elem in trainingSizes]) + "\n"
+    line11 = "nStatistics: " + ",".join(columns) + "\n"
+    line12 = "testSize: " + str(testSize) + "\n"
+    line13 = "recover: " + ",".join([str(elem) for elem in OoS_statistics.shape]) + "\n"
+    parameters = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8 + line9 + line10 + line11 + line12 + line13
+
+    # Save results
+    write_parameters_to_file(OoS_statistics.reshape(-1), parameters, file_name="ExcessModelDRO_OoS", folder_path="./Results/Chapter5_ExcessCVaR/", expId=1)
+
+    # Force garbage collection
     del IS_statistics
     del OoS_statistics
     del Weights_vs_Wasserstein
+    del MODEL
+    del PM
     gc.collect()
 
 #########################################################################################
@@ -291,11 +312,13 @@ if runExperiment2:
     # -------- MODEL PARAMETERS ---------
 
     # Adjustable
-    epsCollection = 10**np.linspace(-3, 0, 20)
+    totalEps = 40
+    startEps = -7
+    endEps = 0
+    epsCollection = 10**np.linspace(startEps, endEps, totalEps)
     epsCollection = np.concatenate(([0], epsCollection), axis=0)
 
     # Conversions (should not be modified)
-    totalEps = len(epsCollection)
     rhoCollection=np.array([rho])
     betaCollection=np.array([beta])
     alpha = (1 + excessReturnAnually)**(1/252)-1
@@ -303,31 +326,12 @@ if runExperiment2:
 
     # -------- ADJUSTABLE ---------
 
-    trainingSizes = np.linspace(252,252*2,5, dtype=np.int16)              # Check sensitivity to choice of training data size N
-    trainingSizes = np.array([252, 504])
-    testSize = 126                                                        # Test on 6 months of data (2 quarter)
-    validationFraction = 0.20                                             # Use 10% data to find the optimal Wasserstein radius
+    trainingSizes = np.linspace(63,63*10,10, dtype=np.int16)              # Check sensitivity to choice of training data size N (training size of 1000 takes approx. 16 min. for 200 simulation)
+    testSize = 126                                                        # Test on 6 months of data (2 quarters)                                # Test on 6 months of data (2 quarter)
+    validationFraction = 0.20                                             # Use 20% data to find the optimal Wasserstein radius
     nModels = 2                                                           # We compare SAA and DRO
 
-    # -------- PREPARE DATA COLLECTION --------
-
-    columns =    ['WassersteinRadius',
-                'Objective',
-                'DownsideSemiStandardDeviation',
-                'RMSE',
-                'MAD',
-                'VaR-{}'.format(beta),
-                'CVaR-{}'.format(beta),
-                'ExcessReturnAverage',
-                'ExcessReturn',
-                'SortinoIndex',
-                'BeatBenchmarkRatio',
-                'TotalReturn',
-                'AverageReturn',
-                'P5',
-                'P10',
-                'P90',
-                'P95']
+    # -------- ALLOCATE MEMORY --------
 
     Certificate = np.zeros((nModels, len(trainingSizes), nSimulations))
     J = np.zeros((nModels, len(trainingSizes), nSimulations))
@@ -335,107 +339,136 @@ if runExperiment2:
 
     # -------- START ROLLING-WINDOW --------
 
-    # Initialize progress bar (tqdm causes sempahore leaks, so it is disabled)
-    currentIter = 0
-    maxIter = nSimulations*len(trainingSizes)
-    iterPerSecond = 0
-    secPerIter = 0
-    timeElapsed = 0
-    timeRemaining = 0
-    start = time.time()
+    # Initialize model (will never use more than 1000 observations)
+    MODEL = ExcessCVaRModelDRO(returnsAssets=assetsReturns[:1000,:], returnsIndex=indexReturns[:1000], beta=beta, rho=rho, alpha=alpha, rf=rf);
 
-    # Start actual experiment
-    for h, trainingSize in enumerate(trainingSizes):
+    with tqdm(total=nSimulations*len(trainingSizes), disable=False) as pbar:
 
-        validationSize = math.floor(trainingSize*validationFraction)
-        trainingSize = trainingSize - validationSize
-        windowSize = trainingSize + validationSize + testSize
-        rollingMax = totalObservations - windowSize
-        slideSize = int(rollingMax/nSimulations)
-        increments = np.arange(0,rollingMax, slideSize)[:nSimulations]
-        totalIncrements = len(increments)
+        # Start actual experiment
+        for h, trainingSize in enumerate(trainingSizes):
 
-        for i, shift in enumerate(increments):
+            validationSize = math.floor(trainingSize*validationFraction)
+            trainingSize = trainingSize - validationSize
+            windowSize = trainingSize + validationSize + testSize
+            rollingMax = totalObservations - windowSize
+            slideSize = int(rollingMax/nSimulations)
+            increments = np.arange(0,rollingMax, slideSize)[:nSimulations]
+            totalIncrements = len(increments)
 
-            # Control moving window
-            startIndex = shift
-            endIndex = shift+windowSize-validationSize-testSize
-            startIndexValidation = shift + trainingSize
-            endIndexValidation = shift + trainingSize + validationSize
-            startIndexTesting = shift + trainingSize + validationSize
-            endIndexTesting = shift + trainingSize + validationSize + testSize
+            for i, shift in enumerate(increments):
 
-            # Train model
-            MODEL = ExcessCVaRModelDRO(returnsAssets=assetsReturns[startIndex:endIndex,:], returnsIndex=indexReturns[startIndex:endIndex], beta=beta, rho=rho, alpha=alpha, rf=rf);
+                # Control moving window
+                startIndex = shift
+                endIndex = shift+windowSize-validationSize-testSize
+                startIndexValidation = shift + trainingSize
+                endIndexValidation = shift + trainingSize + validationSize
+                startIndexTesting = shift + trainingSize + validationSize
+                endIndexTesting = shift + trainingSize + validationSize + testSize
 
-            # Solve it for all epsilon
-            results = MODEL.solve(epsCollection=epsCollection, rhoCollection=rhoCollection,
-                                    betaCollection=betaCollection, progressBar=False);
+                # Set data
+                MODEL.setData(returnsAssets=assetsReturns[startIndex:endIndex,:], returnsIndex=indexReturns[startIndex:endIndex], beta=beta, rho=rho, alpha=alpha, rf=rf)
 
-            # Create aray to find optimal radius
-            candidates = np.zeros(totalEps-1)
+                # Solve it for all epsilon
+                results = MODEL.solve(epsCollection=epsCollection, rhoCollection=rhoCollection,
+                                        betaCollection=betaCollection, progressBar=False);
 
-            # Use validation set to obtain validation performance
-            for j in range(1,totalEps):
+                # Create aray to find optimal radius
+                candidates = np.zeros(totalEps-1)
 
-                # Set weights
-                wDRO = np.array(results.iloc[j,7:].values, dtype=np.float64)
+                # Use validation set to obtain validation performance
+                for j in range(1,totalEps):
 
-                # Set optimal portfolio
-                MODEL.setOptimalPortfolio(wDRO)
+                    # Set weights
+                    wDRO = np.array(results.iloc[j,7:].values, dtype=np.float32)
 
-                # Compute certificate and J
-                candidates[j-1] = MODEL.approximateObjective(assetsReturns[startIndexValidation:endIndexValidation,:],
-                                                            indexReturns[startIndexValidation:endIndexValidation], wDRO)
+                    # Compute certificate and J
+                    candidates[j-1] = MODEL.approximateObjective(assetsReturns[startIndexValidation:endIndexValidation,:],
+                                                                indexReturns[startIndexValidation:endIndexValidation], wDRO)
 
-            # Get optimal radius
-            indexEpsOpt = np.argmin(candidates)
-            epsOpt[h,i] = epsCollection[indexEpsOpt+1]
+                # Get optimal radius
+                indexEpsOpt = np.argmin(candidates)
+                epsOpt[h,i] = epsCollection[indexEpsOpt+1]
 
-            # Set portfolio
-            wOptSAA = np.array(results.iloc[0,7:].values, dtype=np.float64)
-            wOptDRO = np.array(results.iloc[indexEpsOpt+1,7:].values, dtype=np.float64)
+                # Set portfolio
+                wOptSAA = np.array(results.iloc[0,7:].values, dtype=np.float64)
+                wOptDRO = np.array(results.iloc[indexEpsOpt+1,7:].values, dtype=np.float64)
 
-            # Save in-sample performance
-            Certificate[0,h,i] = results.iloc[0,0]
-            Certificate[1,h,i] = results.iloc[indexEpsOpt+1,0]
+                # Save in-sample performance
+                Certificate[0,h,i] = results.iloc[0,0]
+                Certificate[1,h,i] = results.iloc[indexEpsOpt+1,0]
 
-            # Approximate out-of-sample performance
-            J[0,h,i] = MODEL.approximateObjective(assetsReturns[startIndexTesting:endIndexTesting,:],
-                                                            indexReturns[startIndexTesting:endIndexTesting], wOptSAA)
-            J[1,h,i] = MODEL.approximateObjective(assetsReturns[startIndexTesting:endIndexTesting,:],
-                                                            indexReturns[startIndexTesting:endIndexTesting], wOptDRO)
+                # Approximate out-of-sample performance
+                J[0,h,i] = MODEL.approximateObjective(assetsReturns[startIndexTesting:endIndexTesting,:],
+                                                                indexReturns[startIndexTesting:endIndexTesting], wOptSAA)
+                J[1,h,i] = MODEL.approximateObjective(assetsReturns[startIndexTesting:endIndexTesting,:],
+                                                                indexReturns[startIndexTesting:endIndexTesting], wOptDRO)
 
-            # Update progress bar
-            currentIter += 1
-            end = time.time()
-            secPerIter = round(end - start, 2)
-            iterPerSecond = round(1/secPerIter, 2)
-            timeElapsed += round(secPerIter, 2)
-            timeElapsedMinutes = math.floor(timeElapsed/60)
-            timeElapsedSeconds = math.floor(timeElapsed - timeElapsedMinutes*60)
-            timeRemaining = (maxIter - currentIter)/iterPerSecond
-            timeRemainingMinutes = math.floor(timeRemaining/60)
-            timeRemainingSeconds = math.floor(timeRemaining - timeRemainingMinutes*60)
+                # Update progress bar
+                pbar.update(1)
 
-            # Print the progress bar
-            if currentIter % 10 == 0 and iterPerSecond > 1:
-                print("Activity: Experiment 2 | {}/{} [{}:{}<{}:{}, {}it/s]".format(currentIter, maxIter, str(timeElapsedMinutes).zfill(2), str(timeElapsedSeconds).zfill(2), str(timeRemainingMinutes).zfill(2), str(timeRemainingSeconds).zfill(2), iterPerSecond))
-            if currentIter % 10 == 0 and iterPerSecond <= 1:
-                print("Activity: Experiment 2 | {}/{} [{}:{}<{}:{}, {}s/it]".format(currentIter, maxIter, str(timeElapsedMinutes).zfill(2), str(timeElapsedSeconds).zfill(2), str(timeRemainingMinutes).zfill(2), str(timeRemainingSeconds).zfill(2), secPerIter))
-
-            # Restart timer
-            start = time.time()
+    # Create logging string
+    line1 = "alphaAnnualy: " + str(excessReturnAnually) + "\n"
+    line2 = "riskFreeAnnualy: " + str(rfAnnualy) + "\n"
+    line3 = "nSimulations: " + str(nSimulations) + "\n"
+    line4 = "nAssets: " + str(assetsReturns.shape[1]+1) + "\n"
+    line5 = "nEps: " + str(len(epsCollection)) + "\n"
+    line6 = "nBetas: " + str(len(betaCollection)) + "\n"
+    line7 = "nRhos: " + str(len(rhoCollection)) + "\n"
+    line8 = "nTrainingSizes: " + str(len(trainingSizes)) + "\n"
+    line9 = "epsCollection: " + "np.concatenate(([0], 10**np.linspace({}, {}, {})), axis=0)".format(startEps, endEps, totalEps) + "\n"
+    line10 = "betaCollection: " + ",".join([str(round(elem,5)) for elem in betaCollection]) + "\n"
+    line11 = "rhoCollection: " + ",".join([str(round(elem,5)) for elem in rhoCollection]) + "\n"
+    line12 = "trainingSizes: " + ",".join([str(round(elem,5)) for elem in trainingSizes]) + "\n"
+    line13 = "testSize: " + str(testSize) + "\n"
+    line14 = "recover: " + ",".join([str(elem) for elem in Certificate.shape]) + "\n"
+    certificateParameters = line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8 + line9 + line10 + line11 + line12 + line13 + line14
 
     # Save results
-    a,b,c = Certificate.shape
-    np.savetxt("./Results/Chapter5_ExcessCVaR/Chapter5_Experiment2_ExcessModelDRO_Certificate_recover_{}_{}_{}.csv".format(a,b,c),
-            Certificate.reshape(-1), fmt='%.18e', delimiter=' ')
+    write_parameters_to_file(Certificate.reshape(-1), certificateParameters, file_name="ExcessModelDRO_Certificate", folder_path="./Results/Chapter5_ExcessCVaR/", expId=2)
 
-    a,b,c = J.shape
-    np.savetxt("./Results/Chapter5_ExcessCVaR/Chapter5_Experiment2_ExcessModelDRO_J_recover_{}_{}_{}.csv".format(a,b,c),
-            J.reshape(-1), fmt='%.18e', delimiter=' ')
+    # Create logging string
+    line1 = "alphaAnnualy: " + str(excessReturnAnually) + "\n"
+    line2 = "riskFreeAnnualy: " + str(rfAnnualy) + "\n"
+    line3 = "nSimulations: " + str(nSimulations) + "\n"
+    line4 = "nAssets: " + str(assetsReturns.shape[1]+1) + "\n"
+    line5 = "nEps: " + str(len(epsCollection)) + "\n"
+    line6 = "nBetas: " + str(len(betaCollection)) + "\n"
+    line7 = "nRhos: " + str(len(rhoCollection)) + "\n"
+    line8 = "nTrainingSizes: " + str(len(trainingSizes)) + "\n"
+    line9 = "epsCollection: " + "np.concatenate(([0], 10**np.linspace({}, {}, {})), axis=0)".format(startEps, endEps, totalEps) + "\n"
+    line10 = "betaCollection: " + ",".join([str(round(elem,5)) for elem in betaCollection]) + "\n"
+    line11 = "rhoCollection: " + ",".join([str(round(elem,5)) for elem in rhoCollection]) + "\n"
+    line12 = "trainingSizes: " + ",".join([str(round(elem,5)) for elem in trainingSizes]) + "\n"
+    line13 = "testSize: " + str(testSize) + "\n"
+    line14 = "recover: " + ",".join([str(elem) for elem in J.shape]) + "\n"
+    JParameters = line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8 + line9 + line10 + line11 + line12 + line13 + line14
 
-    a,b = epsOpt.shape
-    np.savetxt("./Results/Chapter5_ExcessCVaR/Chapter5_Experiment2_ExcessModelDRO_epsOpt_recover_{}_{}.csv".format(a,b),
-            epsOpt.reshape(-1), fmt='%.18e', delimiter=' ')
+    # Save results
+    write_parameters_to_file(J.reshape(-1), JParameters, file_name="ExcessModelDRO_J", folder_path="./Results/Chapter5_ExcessCVaR/", expId=2)
+
+    # Create logging string
+    line1 = "alphaAnnualy: " + str(excessReturnAnually) + "\n"
+    line2 = "riskFreeAnnualy: " + str(rfAnnualy) + "\n"
+    line3 = "nSimulations: " + str(nSimulations) + "\n"
+    line4 = "nAssets: " + str(assetsReturns.shape[1]+1) + "\n"
+    line5 = "nEps: " + str(len(epsCollection)) + "\n"
+    line6 = "nBetas: " + str(len(betaCollection)) + "\n"
+    line7 = "nRhos: " + str(len(rhoCollection)) + "\n"
+    line8 = "nTrainingSizes: " + str(len(trainingSizes)) + "\n"
+    line9 = "epsCollection: " + "np.concatenate(([0], 10**np.linspace({}, {}, {})), axis=0)".format(startEps, endEps, totalEps) + "\n"
+    line10 = "betaCollection: " + ",".join([str(round(elem,5)) for elem in betaCollection]) + "\n"
+    line11 = "rhoCollection: " + ",".join([str(round(elem,5)) for elem in rhoCollection]) + "\n"
+    line12 = "trainingSizes: " + ",".join([str(round(elem,5)) for elem in trainingSizes]) + "\n"
+    line13 = "testSize: " + str(testSize) + "\n"
+    line14 = "recover: " + ",".join([str(elem) for elem in epsOpt.shape]) + "\n"
+    epsParameters = line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8 + line9 + line10 + line11 + line12 + line13 + line14
+
+    # Save results
+    write_parameters_to_file(epsOpt.reshape(-1), epsParameters, file_name="ExcessModelDRO_epsOpt", folder_path="./Results/Chapter5_ExcessCVaR/", expId=2)
+
+    # Force garbage collection
+    del Certificate
+    del J
+    del epsOpt
+    del MODEL
+    gc.collect()

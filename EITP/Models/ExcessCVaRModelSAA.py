@@ -10,7 +10,6 @@ class ExcessCVaRModelSAA(InvestmentStrategy):
 
         # Call constructor from parent class (see InvestmentStrategy.py)
         super().__init__(returnsAssets=returnsAssets, returnsIndex=returnsIndex, beta=beta, rho=rho, alpha=alpha, rf=rf)
-        print(self.excessReturns.shape)
 
     # Implementation: Excess Returns with CVaR penalty
     def solve(self, rhoCollection=np.linspace(0.1, 4, 40), betaCollection=np.array([0.8, 0.85, 0.90, 0.95, 0.99]), progressBar=True):
@@ -92,6 +91,9 @@ class ExcessCVaRModelSAA(InvestmentStrategy):
         self.optimalPortfolio = results.iloc[0, :];
         self.optimalPortfolio = self.optimalPortfolio.values[len(recordedValues):];
         self.isOptimal = True;
+
+        # Get rid of model
+        MODEL.dispose()
 
         # Return the results
         return results;

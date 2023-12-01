@@ -1,0 +1,20 @@
+In id = 1:
+
+We use a test size of 126.
+
+alpha = 0.05111
+rf = 0.02
+rho = 2
+beta = 0.95
+
+In experiment 1, we used epsilon from -3 to 1.
+In experiment 2, we used epsilon -6, -1, 40.
+
+In id = 2:
+
+We use a test size of 63.
+
+alpha = 0
+beta = 0.95
+rho = 2
+rf = 0.02

@@ -60,7 +60,7 @@ class TrackingModelSAA(InvestmentStrategy):
         # CVaR constraint
         MODEL.constraint('CVaRConstraint', Expr.add(Expr.mul(self.excessReturns, w), Expr.add(Expr.mul(nu, eCVaR), u)), Domain.greaterThan(0.0))
 
-        recordedValues = ["obj", "gamma", "beta", "VaR-{}".format(beta), "CVaR-{}".format(beta)];
+        recordedValues = ["obj", "gamma", "beta", "TE", "VaR", "CVaR"];
         columns = recordedValues + [i for i in range(1,N+1)];
         results = pd.DataFrame(columns=columns)
 
@@ -72,12 +72,14 @@ class TrackingModelSAA(InvestmentStrategy):
 
         # If model is not infeasible, then record the solution.
         if prosta != ProblemStatus.PrimalInfeasible:
+
             # Compute CVaR
+            TE = np.dot(np.array(self.pi), np.abs(self.excessReturns.dot(w.level())))
             VaR = nu.level()[0]
             CVaR = VaR + 1/(1-beta)*np.mean(np.maximum(-self.excessReturns.dot(w.level()) - VaR, 0));
 
             # Save row
-            row = pd.DataFrame([MODEL.primalObjValue(), rho, beta, VaR, CVaR] + list(w.level()), index=columns, columns=[0]);
+            row = pd.DataFrame([MODEL.primalObjValue(), rho, beta, TE, VaR, CVaR] + list(w.level()), index=columns, columns=[0]);
 
             # Concatenate with exisiting results
             results = pd.concat([results, row.T], axis=0);

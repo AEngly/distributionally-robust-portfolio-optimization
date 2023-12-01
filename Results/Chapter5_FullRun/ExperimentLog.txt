@@ -1,0 +1,52 @@
+------- (id, experiment): (1, 1) ------- 
+fileName: ExcessModelDRO_trajectories
+alpha: 0
+nEps: 4
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0, 4)), axis=0)
+betaCollection: 0.9
+rhoCollection: 2
+trainingSize: 252
+recover: 5660,4
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: ExcessModelDRO_epsOpt
+alpha: 0
+nEps: 4
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0, 4)), axis=0)
+betaCollection: 0.9
+rhoCollection: 2
+trainingSize: 252
+length: 91
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: ExcessModelDRO_trajectories
+alpha: 0
+nEps: 101
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 0, 101)), axis=0)
+betaCollection: 0.9
+rhoCollection: 2
+trainingSize: 252
+recover: 5660,4
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: ExcessModelDRO_epsOpt
+alpha: 0
+nEps: 101
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 0, 101)), axis=0)
+betaCollection: 0.9
+rhoCollection: 2
+trainingSize: 252
+length: 91
+
+
