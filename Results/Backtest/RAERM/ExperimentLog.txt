@@ -1,0 +1,377 @@
+------- (id, experiment): (1, 1) -------
+fileName: Backtest_RAERM_Wasserstein
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 5,87
+
+
+------- (id, experiment): (1, 1) -------
+fileName: Backtest_RAERM_trajectories
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 5,5369,4
+
+
+------- (id, experiment): (1, 1) -------
+fileName: Backtest_RAERM_epsOpt
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 5,87
+
+
+------- (id, experiment): (1, 1) -------
+fileName: Backtest_RAERM_IS_statistics
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 2,5,87,21
+
+
+------- (id, experiment): (1, 1) -------
+fileName: Backtest_RAERM_OoS_statistics
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 2,5,87,21
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Backtest_ITM_Trajectories
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 5,5369,4
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Backtest_RAERM_Wasserstein
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 5,87
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Backtest_RAERM_trajectories
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 5,5369,4
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Backtest_RAERM_epsOpt
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 5,87
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Backtest_RAERM_IS_statistics
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 2,5,87,21
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Backtest_RAERM_OoS_statistics
+alpha: 0
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 2,5,87,21
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_Trajectories
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 3
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,4.05,8.0
+trainingSize: 252
+recover: 3,2,5369,4
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_Wasserstein
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 3
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,4.05,8.0
+trainingSize: 252
+recover: 3,2,87
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_trajectories
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 3
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,4.05,8.0
+trainingSize: 252
+recover: 3,2,5369,4
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Frontier_Backtest_RAERM_Trajectories
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 3
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,4.05,8.0
+trainingSize: 252
+recover: 3,2,5369,4
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Frontier_Backtest_RAERM_Wasserstein
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 3
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,4.05,8.0
+trainingSize: 252
+recover: 3,2,87
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_trajectories
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 3
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,4.05,8.0
+trainingSize: 252
+recover: 3,2,5369,4
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_IS_statistics
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 3
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,4.05,8.0
+trainingSize: 252
+recover: 2,3,2,87,21
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_OoS_statistics
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 3
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,4.05,8.0
+trainingSize: 252
+recover: 2,3,2,87,21
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_Trajectories
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,0.37241,0.64483,0.91724,1.18966,1.46207,1.73448,2.0069,2.27931,2.55172,2.82414,3.09655,3.36897,3.64138,3.91379,4.18621,4.45862,4.73103,5.00345,5.27586,5.54828,5.82069,6.0931,6.36552,6.63793,6.91034,7.18276,7.45517,7.72759,8.0
+trainingSize: 252
+recover: 30,2,5369,4
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_Wasserstein
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,0.37241,0.64483,0.91724,1.18966,1.46207,1.73448,2.0069,2.27931,2.55172,2.82414,3.09655,3.36897,3.64138,3.91379,4.18621,4.45862,4.73103,5.00345,5.27586,5.54828,5.82069,6.0931,6.36552,6.63793,6.91034,7.18276,7.45517,7.72759,8.0
+trainingSize: 252
+recover: 30,2,87
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_trajectories
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,0.37241,0.64483,0.91724,1.18966,1.46207,1.73448,2.0069,2.27931,2.55172,2.82414,3.09655,3.36897,3.64138,3.91379,4.18621,4.45862,4.73103,5.00345,5.27586,5.54828,5.82069,6.0931,6.36552,6.63793,6.91034,7.18276,7.45517,7.72759,8.0
+trainingSize: 252
+recover: 30,2,5369,4
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_IS_statistics
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,0.37241,0.64483,0.91724,1.18966,1.46207,1.73448,2.0069,2.27931,2.55172,2.82414,3.09655,3.36897,3.64138,3.91379,4.18621,4.45862,4.73103,5.00345,5.27586,5.54828,5.82069,6.0931,6.36552,6.63793,6.91034,7.18276,7.45517,7.72759,8.0
+trainingSize: 252
+recover: 2,30,2,87,21
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_OoS_statistics
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.1,0.37241,0.64483,0.91724,1.18966,1.46207,1.73448,2.0069,2.27931,2.55172,2.82414,3.09655,3.36897,3.64138,3.91379,4.18621,4.45862,4.73103,5.00345,5.27586,5.54828,5.82069,6.0931,6.36552,6.63793,6.91034,7.18276,7.45517,7.72759,8.0
+trainingSize: 252
+recover: 2,30,2,87,21
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Frontier_Backtest_RAERM_Trajectories
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.01,0.01239,0.01535,0.01902,0.02357,0.02921,0.03619,0.04485,0.05557,0.06885,0.08532,0.10572,0.13099,0.16231,0.20112,0.2492,0.30878,0.38261,0.47409,0.58744,0.7279,0.90193,1.11757,1.38478,1.71586,2.12611,2.63445,3.26432,4.0448,5.01187
+trainingSize: 252
+recover: 30,2,5369,4
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Frontier_Backtest_RAERM_Wasserstein
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.01,0.01239,0.01535,0.01902,0.02357,0.02921,0.03619,0.04485,0.05557,0.06885,0.08532,0.10572,0.13099,0.16231,0.20112,0.2492,0.30878,0.38261,0.47409,0.58744,0.7279,0.90193,1.11757,1.38478,1.71586,2.12611,2.63445,3.26432,4.0448,5.01187
+trainingSize: 252
+recover: 30,2,87
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Frontier_Backtest_RAERM_trajectories
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.01,0.01239,0.01535,0.01902,0.02357,0.02921,0.03619,0.04485,0.05557,0.06885,0.08532,0.10572,0.13099,0.16231,0.20112,0.2492,0.30878,0.38261,0.47409,0.58744,0.7279,0.90193,1.11757,1.38478,1.71586,2.12611,2.63445,3.26432,4.0448,5.01187
+trainingSize: 252
+recover: 30,2,5369,4
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Frontier_Backtest_RAERM_IS_statistics
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.01,0.01239,0.01535,0.01902,0.02357,0.02921,0.03619,0.04485,0.05557,0.06885,0.08532,0.10572,0.13099,0.16231,0.20112,0.2492,0.30878,0.38261,0.47409,0.58744,0.7279,0.90193,1.11757,1.38478,1.71586,2.12611,2.63445,3.26432,4.0448,5.01187
+trainingSize: 252
+recover: 2,30,2,87,21
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Frontier_Backtest_RAERM_OoS_statistics
+alpha: 0
+nEps: 31
+nBetas: 1
+nRhos: 30
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 1, 31)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.01,0.01239,0.01535,0.01902,0.02357,0.02921,0.03619,0.04485,0.05557,0.06885,0.08532,0.10572,0.13099,0.16231,0.20112,0.2492,0.30878,0.38261,0.47409,0.58744,0.7279,0.90193,1.11757,1.38478,1.71586,2.12611,2.63445,3.26432,4.0448,5.01187
+trainingSize: 252
+recover: 2,30,2,87,21
+
+

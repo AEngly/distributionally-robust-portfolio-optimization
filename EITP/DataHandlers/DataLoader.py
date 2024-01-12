@@ -141,7 +141,7 @@ class DataLoader:
         if filtered and intersect:
             allData = pd.read_csv("{}Combined/dailyReturnsFilteredIntersect.csv".format(self.dataPath));
         elif filtered and not intersect:
-            allData = pd.read_csv("{}Combined/dailyPricesFilteredIntersect.csv".format(self.dataPath));
+            allData = pd.read_csv("{}Combined/dailyPricesFilteredFull.csv".format(self.dataPath));
         elif not filtered and intersect:
             allData = pd.read_csv("{}Combined/dailyReturnsIntersect.csv".format(self.dataPath));
         elif not filtered and not intersect:
@@ -149,11 +149,8 @@ class DataLoader:
         else:
             print("Something went wrong. Check the source code.")
 
-        # The filter based on the selected dates
-        allData[(allData['Dates'] >= startDate) & (allData['Dates'] <= endDate)]
-
         # Return the dataset
-        return allData
+        return allData[(allData['Dates'] >= startDate) & (allData['Dates'] <= endDate)]
 
     def filterSectors(self):
 

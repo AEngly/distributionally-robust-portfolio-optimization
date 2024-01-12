@@ -1,48 +1,98 @@
 ------- (id, experiment): (1, 1) ------- 
 fileName: ExcessModelDRO_WassersteinWeights
 nSimulations: 200
-nAssets: 313
-nEps: 31
+nAssets: 257
+nEps: 51
 nBetas: 1
 nRhos: 1
-nTrainingSizes: 4
-epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0.7, 30)), axis=0)
-betaCollection: 0.9
+nTrainingSizes: 6
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0.5, 50)), axis=0)
+betaCollection: 0.8
 rhoCollection: 2
-trainingSizes: 63,126,189,252
-nStatistics: ['WassersteinRadius', 'Objective', 'DownsideSemiStandardDeviation', 'RMSE', 'MAD', 'VaR', 'CVaR', 'ExcessReturnAverage', 'ExcessReturn', 'SortinoIndex', 'BeatBenchmarkRatio', 'TotalReturn', 'AverageReturn', 'P5', 'P10', 'P90', 'P95']
-recover: 4,31,313
+trainingSizes: 63,126,189,252,504,756
+nStatistics: ['Objective', 'DownsideSemiStandardDeviation', 'RMSE', 'MAD', 'VaR-0.8', 'CVaR-0.8', 'ExcessReturnAverage', 'ExcessReturn', 'SortinoIndex', 'BeatBenchmarkRatio', 'BeatBenchmarkExcess', 'BeatBenchmarkShortfall', 'BeatBenchmarkRewardRiskRatio', 'BeatBenchmarkShortfallRewardRiskRatio', 'MarketBeta', 'TotalReturn', 'AverageReturn', 'P5', 'P10', 'P90', 'P95']
+testSize: 63
+recover: 6,51,256
 
 
 ------- (id, experiment): (1, 1) ------- 
 fileName: ExcessModelDRO_IS
 nSimulations: 200
-nAssets: 313
-nEps: 31
+nAssets: 257
+nEps: 51
 nBetas: 1
 nRhos: 1
-nTrainingSizes: 4
-epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0.7, 30)), axis=0)
-betaCollection: 0.9
+nTrainingSizes: 6
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0.5, 50)), axis=0)
+betaCollection: 0.8
 rhoCollection: 2
-trainingSizes: 63,126,189,252
-nStatistics: WassersteinRadius,Objective,DownsideSemiStandardDeviation,RMSE,MAD,VaR,CVaR,ExcessReturnAverage,ExcessReturn,SortinoIndex,BeatBenchmarkRatio,TotalReturn,AverageReturn,P5,P10,P90,P95
-recover: 4,200,31,16
+trainingSizes: 63,126,189,252,504,756
+nStatistics: Objective,DownsideSemiStandardDeviation,RMSE,MAD,VaR-0.8,CVaR-0.8,ExcessReturnAverage,ExcessReturn,SortinoIndex,BeatBenchmarkRatio,BeatBenchmarkExcess,BeatBenchmarkShortfall,BeatBenchmarkRewardRiskRatio,BeatBenchmarkShortfallRewardRiskRatio,MarketBeta,TotalReturn,AverageReturn,P5,P10,P90,P95
+testSize: 63
+recover: 6,200,51,21
 
 
 ------- (id, experiment): (1, 1) ------- 
 fileName: ExcessModelDRO_OoS
 nSimulations: 200
-nAssets: 313
-nEps: 31
+nAssets: 257
+nEps: 51
 nBetas: 1
 nRhos: 1
-nTrainingSizes: 4
-epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0.7, 30)), axis=0)
-betaCollection: 0.9
+nTrainingSizes: 6
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0.5, 50)), axis=0)
+betaCollection: 0.8
 rhoCollection: 2
-trainingSizes: 63,126,189,252
-nStatistics: WassersteinRadius,Objective,DownsideSemiStandardDeviation,RMSE,MAD,VaR,CVaR,ExcessReturnAverage,ExcessReturn,SortinoIndex,BeatBenchmarkRatio,TotalReturn,AverageReturn,P5,P10,P90,P95
-recover: 4,200,31,16
+trainingSizes: 63,126,189,252,504,756
+nStatistics: Objective,DownsideSemiStandardDeviation,RMSE,MAD,VaR-0.8,CVaR-0.8,ExcessReturnAverage,ExcessReturn,SortinoIndex,BeatBenchmarkRatio,BeatBenchmarkExcess,BeatBenchmarkShortfall,BeatBenchmarkRewardRiskRatio,BeatBenchmarkShortfallRewardRiskRatio,MarketBeta,TotalReturn,AverageReturn,P5,P10,P90,P95
+testSize: 63
+recover: 6,200,51,21
+
+
+------- (id, experiment): (1, 2) ------- 
+alphaAnnualy: 0
+nAssets: 257
+nEps: 51
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 10
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 0.5, 50)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSizes: 63,126,189,252,315,378,441,504,567,630
+testSize: 63
+recover: 2,10,200
+
+
+------- (id, experiment): (1, 2) ------- 
+alphaAnnualy: 0
+nSimulations: 200
+nAssets: 257
+nEps: 51
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 10
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 0.5, 50)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSizes: 63,126,189,252,315,378,441,504,567,630
+testSize: 63
+recover: 2,10,200
+
+
+------- (id, experiment): (1, 2) ------- 
+alphaAnnualy: 0
+nSimulations: 200
+nAssets: 257
+nEps: 51
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 10
+epsCollection: np.concatenate(([0], 10**np.linspace(-8, 0.5, 50)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSizes: 63,126,189,252,315,378,441,504,567,630
+testSize: 63
+recover: 10,200
 
 

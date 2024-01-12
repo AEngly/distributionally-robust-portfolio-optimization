@@ -60,11 +60,14 @@ def GeometricBrownianMotion(mu = np.array([]), SIGMA = SIGMA, tN = 100, t0 = 0, 
         if verbose:
             print("Plotting has started ...\n")
 
+        myMap = plt.get_cmap('inferno')
+        colors = myMap(np.linspace(0, 1, df.iloc[:,1:].values.shape[1]))
         plt.figure(figsize=(10,6), dpi = 100)
         plt.xlabel('t', fontsize = 14)
         plt.ylabel(r'$X_{t}$', fontsize = 14)
         plt.title(title, fontsize = 18)
-        plt.plot(df.iloc[:,0].values, df.iloc[:,1:].values);
+        for i in range(df.iloc[:,1:].values.shape[1]):
+            plt.plot(df.iloc[:,0].values, df.iloc[:,1+i].values, color=myMap(0.1));
         plt.show()
 
     return(df)

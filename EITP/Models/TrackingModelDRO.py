@@ -114,8 +114,20 @@ class TrackingModelDRO(InvestmentStrategy):
                             results = pd.concat([results, row.T], axis=0);
 
                         else:
-                            print("Solution could not be found for epsilon = {}.".format(epsNext));
-                            print(prosta);
+
+                            print("Optimal solution could not be found for epsilon = {}.".format(epsNext));
+                            print(prosta, statusPrimal, statusDual);
+
+                            # Compute CVaR
+                            TE = np.dot(np.array(self.pi), np.abs(self.excessReturns.dot(w.level())));
+                            VaR = nu.level()[0]
+                            CVaR = VaR + 1/(1-betaNew)*np.mean(np.maximum(-self.excessReturns.dot(w.level()) - VaR, 0));
+
+                            # Save row
+                            row = pd.DataFrame([MODEL.primalObjValue(), eps.getValue()[0], rho.getValue()[0], -1/betaMod.getValue()[0]+1, TE, VaR, CVaR] + list(w.level()), index=columns, columns=[0]);
+
+                            # Concatenate with exisiting results
+                            results = pd.concat([results, row.T], axis=0);
 
                         pbar.update(1);
 

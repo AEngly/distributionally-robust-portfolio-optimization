@@ -15,29 +15,20 @@ Note:
 
 """
 
+# Specify first date to include in the dataset
+startDate = "1999-01-01"
+
 # Load dependencies
 import datetime as dt
 import numpy as np
 import pandas as pd
 from mosek.fusion import *
-from tqdm import tqdm
-import math
-import gc
 from sys import getsizeof
 from tqdm import tqdm
 from pathlib import Path
 
 # Imports from module
-from EITP.Models.TrackingModelSAA import TrackingModelSAA as TrackingModelSAA;
-from EITP.Models.ExcessCVaRModelSAA import ExcessCVaRModelSAA as ExcessCVaRModelSAA;
-from EITP.Models.TrackingModelDRO import TrackingModelDRO as TrackingModelDRO;
-from EITP.Models.ExcessCVaRModelDRO import ExcessCVaRModelDRO as ExcessCVaRModelDRO;
-from EITP.PerformanceEvaluation.QuantitativeStatistics import PerformanceMetrics;
 from EITP.DataHandlers.DataLoader import DataLoader;
-from EITP.Auxiliaries.Logger import write_parameters_to_file;
-
-# Specify first date to include in the dataset
-startDate = "1999-01-01"
 
 # MAKE A FILE OF RETURNS WITH ALL CONSTITUENTS THAT HAVE BEEN PRESENT IN THE ENTIRE PERIOD
 
@@ -49,6 +40,7 @@ totalObservations = priceData.shape[0]
 
 # Convert to daily yields (only works for 3 Mo)
 yieldData["3 Mo"] = (1 + yieldData['3 Mo']/100)**(1/252) - 1
+yieldData = yieldData.dropna(axis=0)
 
 # Get asset data
 aggregateData = pd.merge(yieldData, priceData, on='Dates', how='inner')
@@ -71,6 +63,7 @@ allReturns = pd.DataFrame(assetReturns)
 allReturns.insert(0, 'Dates', dates)
 allReturns.insert(1, 'SPX-INDEX', indexReturns)
 allReturns = allReturns.rename(columns={0: 'TREASURY-3M'})
+allReturns = allReturns.dropna(axis=0)
 
 # Save file
 filepath = Path('./Data/Combined/dailyReturnsIntersect.csv')
@@ -86,6 +79,7 @@ totalObservations = priceData.shape[0]
 
 # Convert to daily yields (only works for 3 Mo)
 yieldData["3 Mo"] = (1 + yieldData['3 Mo']/100)**(1/252) - 1
+yieldData = yieldData.dropna(axis=0)
 
 # Get asset data
 aggregateData = pd.merge(yieldData, priceData, on='Dates', how='inner')
@@ -104,7 +98,7 @@ aggregateData.insert(1, 'SPX-INDEX', index)
 
 # Save file
 filepath = Path('./Data/Combined/dailyPricesFull.csv')
-allReturns.to_csv(filepath, index=False)
+aggregateData.to_csv(filepath, index=False)
 
 # MAKE A FILE OF RETURNS WITH ALL CONSTITUENTS THAT HAVE BEEN PRESENT IN THE ENTIRE PERIOD EXCLUDING BLACKLIST
 
@@ -116,6 +110,7 @@ totalObservations = priceData.shape[0]
 
 # Convert to daily yields (only works for 3 Mo)
 yieldData["3 Mo"] = (1 + yieldData['3 Mo']/100)**(1/252) - 1
+yieldData = yieldData.dropna(axis=0)
 
 # Get asset data
 aggregateData = pd.merge(yieldData, priceData, on='Dates', how='inner')
@@ -153,6 +148,7 @@ totalObservations = priceData.shape[0]
 
 # Convert to daily yields (only works for 3 Mo)
 yieldData["3 Mo"] = (1 + yieldData['3 Mo']/100)**(1/252) - 1
+yieldData = yieldData.dropna(axis=0)
 
 # Get asset data
 aggregateData = pd.merge(yieldData, priceData, on='Dates', how='inner')
@@ -171,4 +167,4 @@ aggregateData.insert(1, 'SPX-INDEX', index)
 
 # Save file
 filepath = Path('./Data/Combined/dailyPricesFilteredFull.csv')
-allReturns.to_csv(filepath, index=False)
+aggregateData.to_csv(filepath, index=False)

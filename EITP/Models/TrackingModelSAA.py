@@ -16,10 +16,10 @@ from EITP.Models.InvestmentStrategy import InvestmentStrategy;
 
 class TrackingModelSAA(InvestmentStrategy):
 
-    def __init__(self, returnsAssets=np.zeros((0,0)), returnsIndex=np.zeros((0,0)), beta=0.95, rho=0.6, alpha=0.00, rf=0.02):
+    def __init__(self, returnsAssets=np.zeros((0,0)), returnsIndex=np.zeros((0,0)), beta=0.95, rho=0.6, alpha=0.00):
 
         # Call constructor from parent class (see InvestmentStrategy.py)
-        super().__init__(returnsAssets=returnsAssets, returnsIndex=returnsIndex, beta=beta, rho=rho, alpha=alpha, rf=rf)
+        super().__init__(returnsAssets=returnsAssets, returnsIndex=returnsIndex, beta=beta, rho=rho, alpha=alpha)
 
     # Method 1: Run model
     def solve(self, x0=None):
@@ -95,7 +95,7 @@ class TrackingModelSAA(InvestmentStrategy):
 
         # Processing of returns
         self.N, self.M = returnsAssets.shape
-        self.returnsAssets = np.concatenate((np.ones((self.N,1))*self.rf, returnsAssets), axis=1)
+        self.returnsAssets = returnsAssets
         self.M += 1
         self.returnsIndex = returnsIndex
         self.returnsIndexEnhanced = returnsIndex + self.alpha

@@ -91,8 +91,7 @@ class InvestmentStrategy:
 
         # Get dimensions
         N,M = returnsAssets.shape;
-        returnsAssets = np.concatenate((np.ones((N,1))*self.rf, returnsAssets), axis=1);
-        M += 1;
+        returnsAssets = returnsAssets;
 
         # Selected data
         selectedData = np.concatenate((np.zeros((1, M)), returnsAssets), axis=0);
@@ -107,7 +106,6 @@ class InvestmentStrategy:
         enhancedIndex = np.transpose(returnsIndex + self.alpha);
         enhancedIndex = np.cumprod(enhancedIndex + 1);
         enhancedIndex = np.insert(enhancedIndex, 0, 1.0, axis=0) * 100;
-
 
         # Compute portfolio development
         portfolio = np.ones((N+1,1))*100;

@@ -1,0 +1,309 @@
+------- (id, experiment): (1, 1) ------- 
+fileName: ITMDRO_WassersteinWeights
+alphaAnnualy: 0.03
+nSimulations: 200
+nAssets: 257
+nEps: 41
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 6
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 41)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.2
+trainingSizes: 63,126,189,252,504,756
+nStatistics: ['Objective', 'DownsideSemiStandardDeviation', 'RMSE', 'MAD', 'VaR-0.8', 'CVaR-0.8', 'AverageExcessReturn', 'ExcessReturn', 'SortinoIndex', 'BeatBenchmarkRatio', 'BeatBenchmarkExcess', 'BeatBenchmarkShortfall', 'BeatBenchmarkRewardRiskRatio', 'BeatBenchmarkShortfallRewardRiskRatio', 'MarketBeta', 'TotalReturn', 'AverageReturn', 'P5', 'P10', 'P90', 'P95']
+testSize: 63
+recover: 6,41,256
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: ITMDRO_IS
+alphaAnnualy: 0.03
+nSimulations: 200
+nAssets: 257
+nEps: 41
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 6
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 41)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.2
+trainingSizes: 63,126,189,252,504,756
+nStatistics: Objective,DownsideSemiStandardDeviation,RMSE,MAD,VaR-0.8,CVaR-0.8,AverageExcessReturn,ExcessReturn,SortinoIndex,BeatBenchmarkRatio,BeatBenchmarkExcess,BeatBenchmarkShortfall,BeatBenchmarkRewardRiskRatio,BeatBenchmarkShortfallRewardRiskRatio,MarketBeta,TotalReturn,AverageReturn,P5,P10,P90,P95
+testSize: 63
+recover: 6,200,41,21
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: ITMDRO_OoS
+alphaAnnualy: 0.03
+nSimulations: 200
+nAssets: 257
+nEps: 41
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 6
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 41)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.2
+trainingSizes: 63,126,189,252,504,756
+nStatistics: Objective,DownsideSemiStandardDeviation,RMSE,MAD,VaR-0.8,CVaR-0.8,AverageExcessReturn,ExcessReturn,SortinoIndex,BeatBenchmarkRatio,BeatBenchmarkExcess,BeatBenchmarkShortfall,BeatBenchmarkRewardRiskRatio,BeatBenchmarkShortfallRewardRiskRatio,MarketBeta,TotalReturn,AverageReturn,P5,P10,P90,P95
+testSize: 63
+recover: 6,200,41,21
+
+
+------- (id, experiment): (1, 2) ------- 
+fileName: ITMDRO_Certificate
+alphaAnnualy: 0.03
+nSimulations: 200
+nAssets: 257
+nEps: 41
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 8
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 40)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.2
+trainingSizes: 63,126,189,252,315,378,441,504
+testSize: 63
+recover: 2,8,200
+
+
+------- (id, experiment): (1, 2) ------- 
+fileName: ITMDRO_J
+alphaAnnualy: 0.03
+nSimulations: 200
+nAssets: 257
+nEps: 41
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 8
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 40)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.2
+trainingSizes: 63,126,189,252,315,378,441,504
+testSize: 63
+recover: 2,8,200
+
+
+------- (id, experiment): (1, 2) ------- 
+fileName: ITMDRO_epsOpt
+alphaAnnualy: 0.03
+nSimulations: 200
+nAssets: 257
+nEps: 41
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 8
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 40)), axis=0)
+betaCollection: 0.8
+rhoCollection: 0.2
+trainingSizes: 63,126,189,252,315,378,441,504
+testSize: 63
+recover: 8,200
+
+
+------- (id, experiment): (1, 3) ------- 
+fileName: ITMDRO_AlphaTotalDeviation
+nSimulations: 200
+nAssets: 256
+nEps: 21
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0.5, 20)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 126,504
+testSize: 63
+recover: 2,15,2,200
+
+
+------- (id, experiment): (1, 3) ------- 
+fileName: ITMDRO_AlphaRMSE
+nSimulations: 200
+nAssets: 256
+nEps: 21
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0.5, 20)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 126,504
+testSize: 63
+recover: 2,15,2,200
+
+
+------- (id, experiment): (1, 3) ------- 
+fileName: ITMDRO_AlphaWeights
+nSimulations: 200
+nAssets: 256
+nEps: 21
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0.5, 20)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 126,504
+testSize: 63
+recover: 2,2,15,256,200
+
+
+------- (id, experiment): (1, 3) ------- 
+fileName: ITMDRO_AlphaWasserstein
+nSimulations: 200
+nAssets: 256
+nEps: 21
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0.5, 20)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 126,504
+testSize: 63
+recover: 2,2,15,200
+
+
+------- (id, experiment): (1, 3) ------- 
+fileName: ITMDRO_AlphaWassersteinCertificate
+nSimulations: 200
+nAssets: 256
+nEps: 21
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0.5, 20)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 126,504
+testSize: 63
+recover: 2,2,15,200
+
+
+------- (id, experiment): (1, 3) ------- 
+fileName: ITMDRO_alphaEpsOpt
+nSimulations: 200
+nAssets: 256
+nEps: 21
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0.5, 20)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 126,504
+testSize: 63
+recover: 2,15,200
+
+
+------- (id, experiment): (2, 3) ------- 
+fileName: ITMDRO_AlphaTotalDeviation
+nSimulations: 200
+nAssets: 256
+nEps: 26
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 0, 25)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 63,252
+testSize: 63
+recover: 2,15,2,200
+
+
+------- (id, experiment): (2, 3) ------- 
+fileName: ITMDRO_AlphaRMSE
+nSimulations: 200
+nAssets: 256
+nEps: 26
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 0, 25)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 63,252
+testSize: 63
+recover: 2,15,2,200
+
+
+------- (id, experiment): (2, 3) ------- 
+fileName: ITMDRO_AlphaWeights
+nSimulations: 200
+nAssets: 256
+nEps: 26
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 0, 25)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 63,252
+testSize: 63
+recover: 2,2,15,256,200
+
+
+------- (id, experiment): (2, 3) ------- 
+fileName: ITMDRO_AlphaWasserstein
+nSimulations: 200
+nAssets: 256
+nEps: 26
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 0, 25)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 63,252
+testSize: 63
+recover: 2,2,15,200
+
+
+------- (id, experiment): (2, 3) ------- 
+fileName: ITMDRO_AlphaWassersteinCertificate
+nSimulations: 200
+nAssets: 256
+nEps: 26
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 0, 25)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 63,252
+testSize: 63
+recover: 2,2,15,200
+
+
+------- (id, experiment): (2, 3) ------- 
+fileName: ITMDRO_alphaEpsOpt
+nSimulations: 200
+nAssets: 256
+nEps: 26
+nBetas: 1
+nRhos: 1
+nTrainingSizes: 2
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 0, 25)), axis=0)
+betaCollection: 0.8
+alphaCollection: np.linspace(0.95,1.15,15)**(1/252) - 1
+rhoCollection: 0.2
+trainingSizes: 63,252
+testSize: 63
+recover: 2,15,200
+
+

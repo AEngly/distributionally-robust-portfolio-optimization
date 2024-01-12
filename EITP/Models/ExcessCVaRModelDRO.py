@@ -5,13 +5,15 @@ import matplotlib.pyplot as plt
 from mosek.fusion import *
 from tqdm import tqdm
 from EITP.Models.InvestmentStrategy import InvestmentStrategy;
+import sys
 
 class ExcessCVaRModelDRO(InvestmentStrategy):
 
-    def __init__(self, returnsAssets=np.ones((10,9)), returnsIndex=np.ones((10,1)), beta=0.95, rho=0.00, alpha=0.00):
+    def __init__(self, returnsAssets=np.ones((10,9)), returnsIndex=np.ones((10,1)), beta=0.95, rho=0.00, alpha=0.00, cardinality=False):
 
         # Call constructor from parent class (see InvestmentStrategy.py)
         super().__init__(returnsAssets=returnsAssets, returnsIndex=returnsIndex, beta=beta, rho=rho, alpha=alpha)
+        self.cardinality = cardinality;
 
     # Method: Solve model with MOSEK Fusion API
     def solve(self, epsCollection=np.linspace(10**(-8), 10**(-1), 100), rhoCollection=np.array([2]),
@@ -66,6 +68,21 @@ class ExcessCVaRModelDRO(InvestmentStrategy):
             MODEL.constraint('infinityNormReturn1_{}'.format(k), Expr.sub(a_k[k], Expr.mul(mOnes, _lambda)), Domain.lessThan(0.0));
             MODEL.constraint('infinityNormReturn2_{}'.format(k), Expr.sub(Expr.mul(-1, a_k[k]), Expr.mul(mOnes, _lambda)), Domain.lessThan(0.0));
 
+        # Then we add cardinality constraints if specified
+        maxCardinality = 10;
+        if self.cardinality:
+            y = MODEL.variable("y", M, Domain.binary());
+            MODEL.constraint('cardinality', Expr.sum(y), Domain.lessThan(maxCardinality));
+            #MODEL.constraint('cardinality', Expr.sum(y), Domain.equalsTo(maxCardinality));
+            MODEL.constraint('lessThanY', Expr.sub(w,y), Domain.lessThan(0.0));
+
+            # Set solver params
+            #MODEL.setSolverParam("mioMaxTime", 30.0)
+            MODEL.setSolverParam("mioTolRelGap", 0.10)
+            MODEL.setLogHandler(sys.stdout)
+            #MODEL.setSolverParam("log", 1)
+            MODEL.acceptedSolutionStatus(AccSolutionStatus.Feasible)
+
         # Record original objective
         recordedValues = ["obj", "eps", "rho", "beta", "excessReturns", "VaR", "CVaR"];
         columns = recordedValues + [i for i in range(1,M+1)];
@@ -85,7 +102,12 @@ class ExcessCVaRModelDRO(InvestmentStrategy):
                         b1_vec_param.setValue(rhoNew - rhoNew/(1-betaNew));
 
                         # Solve model
+                        MODEL.setLogHandler(sys.stdout)
                         MODEL.solve();
+
+                        # Print optimality gap under cardinality
+                        if self.cardinality:
+                            print("Relative optimality gap: {}".format(MODEL.getSolverDoubleInfo("mioObjRelGap")));
 
                         # Get problem status
                         statusPrimal = MODEL.getPrimalSolutionStatus();
@@ -93,7 +115,7 @@ class ExcessCVaRModelDRO(InvestmentStrategy):
                         prosta = MODEL.getProblemStatus();
 
                         # Check for optimality
-                        if statusPrimal == SolutionStatus.Optimal and statusDual == SolutionStatus.Optimal:
+                        if (prosta == ProblemStatus.PrimalFeasible) or (statusPrimal == SolutionStatus.Optimal and statusDual == SolutionStatus.Optimal):
 
                             # Compute CVaR
                             excessReturns = np.dot(np.array(self.pi), self.excessReturns.dot(w.level()));

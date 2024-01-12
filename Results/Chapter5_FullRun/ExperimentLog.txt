@@ -1,52 +1,104 @@
 ------- (id, experiment): (1, 1) ------- 
-fileName: ExcessModelDRO_trajectories
+fileName: Backtest_ExcessModelDRO_trajectories
 alpha: 0
-nEps: 4
+nEps: 61
 nBetas: 1
 nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0, 4)), axis=0)
-betaCollection: 0.9
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0, 61)), axis=0)
+betaCollection: 0.8
 rhoCollection: 2
-trainingSize: 252
-recover: 5660,4
+trainingSize: 126
+recover: 5615,4
 
 
 ------- (id, experiment): (1, 1) ------- 
-fileName: ExcessModelDRO_epsOpt
+fileName: Backtest_ExcessModelDRO_epsOpt
 alpha: 0
-nEps: 4
+nEps: 61
 nBetas: 1
 nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 0, 4)), axis=0)
-betaCollection: 0.9
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0, 61)), axis=0)
+betaCollection: 0.8
 rhoCollection: 2
-trainingSize: 252
-length: 91
+trainingSize: 126
+recover: 91
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Backtest_ExcessModelDRO_IS_statistics
+alpha: 0
+nEps: 61
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0, 61)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 126
+recover: 2,91,21
+
+
+------- (id, experiment): (1, 1) ------- 
+fileName: Backtest_ExcessModelDRO_OoS_statistics
+alpha: 0
+nEps: 61
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-6, 0, 61)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 126
+recover: 2,91,21
 
 
 ------- (id, experiment): (2, 1) ------- 
-fileName: ExcessModelDRO_trajectories
+fileName: Backtest_ExcessModelDRO_trajectories
 alpha: 0
 nEps: 101
 nBetas: 1
 nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-8, 0, 101)), axis=0)
-betaCollection: 0.9
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 101)), axis=0)
+betaCollection: 0.8
 rhoCollection: 2
-trainingSize: 252
-recover: 5660,4
+trainingSize: 63
+recover: 5615,4
 
 
 ------- (id, experiment): (2, 1) ------- 
-fileName: ExcessModelDRO_epsOpt
+fileName: Backtest_ExcessModelDRO_epsOpt
 alpha: 0
 nEps: 101
 nBetas: 1
 nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-8, 0, 101)), axis=0)
-betaCollection: 0.9
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 101)), axis=0)
+betaCollection: 0.8
 rhoCollection: 2
-trainingSize: 252
-length: 91
+trainingSize: 63
+recover: 91
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Backtest_ExcessModelDRO_IS_statistics
+alpha: 0
+nEps: 101
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 101)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 63
+recover: 2,91,21
+
+
+------- (id, experiment): (2, 1) ------- 
+fileName: Backtest_ExcessModelDRO_OoS_statistics
+alpha: 0
+nEps: 101
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 101)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 63
+recover: 2,91,21
 
 
