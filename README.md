@@ -52,10 +52,13 @@ In this part, I compare sample average approximation (SAA) and a Wasserstein-bas
 The Wasserstein radii is selected with a hold-out method, and the results performance is compared over the entire period. In addition, an efficient frontier is generated for RAERM. 
 
 Files: EXPERIMENT_Backtest_Dynamic_RAERM.py, EXPERIMENT_Backtest_Dynamic_ITM.py, EXPERIMENT_Backtest_Frontier_RAERM.py, and EXPERIMENT_Backtest_Frontier_ITM.py
+
 Output files are saved to: Results/Backtest
 
 Details of used parameters can be found in the above directories ExperimentLog.txt.
 
 Plots on the basis of the results are saved in ResultsPlots/Backtest. These are generated with ITM (Visualization of Backtest).ipynb and RAERM (Visualization of Backtest).ipynb.
 
+## 5. Plots used for Background Theory
 
+In the thesis, I have a comprehensive overview of the utilized theory. Files starting with "Plots of ... .ipynb" holds to code to generate these.
