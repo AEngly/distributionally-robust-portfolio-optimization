@@ -24,6 +24,7 @@ To include an asset resembling a bank account, I use 3M short-rate obtained for 
 The total set of tickers are found as the union of all days in "ConstituentInformation.csv", and then the prices are downloaded with AlphaVantage. It requires a premium API key, which can be obtained from their website. If you wish to use the code, change the ticker in EITP/DataHandlers/DataFetcher.py, which is used in the code. The package EITP includes essential functions used in the code in general.
 
 Disadvantage: Some tickers cannot be obtained. In addition, to backtest I need to make a intersection of assets over a fixex periods excluding backrupcies, delistings and so forth. Prone to survivorship bias.
+
 Advantage: Cheap to construct.
 
 ## 2. Construction of Models
