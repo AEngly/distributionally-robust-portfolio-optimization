@@ -2,7 +2,7 @@
 File: DATA_ReformatData.py
 Author: Andreas Engly
 Date: 30-11-2023
-Description: This file generates the results for Wasserstein-based DRO of ExcessCVaR model used in the thesis.
+Description: This file generates the results for Wasserstein-based DRO of ITM model used in the thesis.
 
 Dependencies:
 - See below.

@@ -1,7 +1,6 @@
 """
-File: DATA_ReformatData.py
-Author: Andreas Engly
-Date: 30-11-2023
+Author: Andreas Heidelbach Engly (s170303)
+Date: 15-01-2024
 Description: This file combines the fetched data, structure it to make the rest of the operations easy, and then save the new format as files.
 
 Dependencies:
@@ -15,6 +14,11 @@ Note:
 
 """
 
+# Print that script is starting
+print("\n#########################################################################################\n")
+print("                           Combining Sources to Dataset for S&P500                           ")
+print("\n#########################################################################################\n")
+
 # Specify first date to include in the dataset
 startDate = "1999-01-01"
 
@@ -24,7 +28,6 @@ import numpy as np
 import pandas as pd
 from mosek.fusion import *
 from sys import getsizeof
-from tqdm import tqdm
 from pathlib import Path
 
 # Imports from module

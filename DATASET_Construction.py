@@ -1,6 +1,7 @@
 """
 Author: Andreas Heidelbach Engly (s170303)
 Purpose: This script constructs datasets for evaluating models on S&P500 historical prices and constituent information. It includes scraping, modification of tickers, API requests to AlphaVantage for price data, downloading S&P500 index data from yfinance, and saving relevant data for later access by models.
+Date: 15-01-2024
 
 Inputs:
 - None

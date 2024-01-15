@@ -1,6 +1,8 @@
 """
 Author: Andreas Heidelbach Engly (s170303)
 Purpose: This file generates the results for full comparison of models.
+Date: 15-01-2024
+Description: This file backtests the Wasserstein-based DRO of ITM model used in the thesis.
 
 Inputs:
 - In order to get the right results, the model parameters must be modified (look e.g. at ExperimentLog.txt)).

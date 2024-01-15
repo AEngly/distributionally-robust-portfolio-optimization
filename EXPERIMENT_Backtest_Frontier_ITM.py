@@ -1,6 +1,7 @@
 """
 Author: Andreas Heidelbach Engly (s170303)
-Purpose: This file generates the results for full comparison of models.
+Purpose: This file test the risk-aversion sensitivity for ITM.
+Date: 15-01-2024
 
 Inputs:
 - In order to get the right results, the model parameters must be modified (look e.g. at ExperimentLog.txt)).
