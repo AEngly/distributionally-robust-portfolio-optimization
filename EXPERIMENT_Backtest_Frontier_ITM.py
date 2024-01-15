@@ -359,22 +359,6 @@ parameters = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7 + lin
 # Save results
 write_parameters_to_file(epsOpt.reshape(-1), parameters, file_name="Frontier_Backtest_ITM_epsOpt", folder_path="./Results/Backtest/ITM/", expId=1)
 
-# Create logging string
-line0 = "fileName: " + "Frontier_Backtest_ITM_trajectories" + "\n"
-line1 = "alpha: {}".format(excessReturnAnually) + "\n"
-line2 = "nEps: " + str(len(epsCollection)) + "\n"
-line3 = "nBetas: " + str(len(betaCollection)) + "\n"
-line4 = "nRhos: " + str(len(rhoCollection)) + "\n"
-line5 = "epsCollection: " + "np.concatenate(([0], 10**np.linspace({}, {}, {})), axis=0)".format(startEps, endEps, totalEps) + "\n"
-line6 = "betaCollection: " + ",".join([str(round(elem,5)) for elem in betaCollection]) + "\n"
-line7 = "rhoCollection: " + ",".join([str(round(elem,5)) for elem in rhoCollection]) + "\n"
-line8 = "trainingSize: " + "{}".format(trainingSize) + "\n"
-line9 = "recover: " + ",".join([str(elem) for elem in trajectories.shape]) + "\n"
-parameters = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8 + line9
-
-# Save results
-write_parameters_to_file(trajectories.reshape(-1), parameters, file_name="Frontier_Backtest_ITM_trajectories", folder_path="./Results/Backtest/ITM/", expId=1)
-
 # Save statistics
 
 # Create logging string

@@ -1,239 +1,5 @@
 
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_Trajectories
-alpha: 0.05
-nEps: 11
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 11)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,5369,4
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_Wasserstein
-alpha: 0.05
-nEps: 11
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 11)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,87
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_trajectories
-alpha: 0.05
-nEps: 11
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 11)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,5369,4
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_epsOpt
-alpha: 0.05
-nEps: 11
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 11)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,87
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_IS_statistics
-alpha: 0.05
-nEps: 11
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 11)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 2,5,87,21
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_OoS_statistics
-alpha: 0.05
-nEps: 11
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 11)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 2,5,87,21
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_Trajectories
-alpha: 0.05
-nEps: 51
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,5369,4
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_Wasserstein
-alpha: 0.05
-nEps: 51
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,87
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_trajectories
-alpha: 0.05
-nEps: 51
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,5369,4
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_epsOpt
-alpha: 0.05
-nEps: 51
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,87
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_IS_statistics
-alpha: 0.05
-nEps: 51
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 2,5,87,21
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_OoS_statistics
-alpha: 0.05
-nEps: 51
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-7, 1, 51)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 2,5,87,21
-
-
-------- (id, experiment): (2, 1) ------- 
-fileName: Backtest_ITM_Trajectories
-alpha: 0.05
-nEps: 3
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 3)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,5369,4
-
-
-------- (id, experiment): (2, 1) ------- 
-fileName: Backtest_ITM_Wasserstein
-alpha: 0.05
-nEps: 3
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 3)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,87
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_trajectories
-alpha: 0.05
-nEps: 3
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 3)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,5369,4
-
-
-------- (id, experiment): (2, 1) ------- 
-fileName: Backtest_ITM_epsOpt
-alpha: 0.05
-nEps: 3
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 3)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 5,87
-
-
-------- (id, experiment): (2, 1) ------- 
-fileName: Backtest_ITM_IS_statistics
-alpha: 0.05
-nEps: 3
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 3)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 2,5,87,21
-
-
-------- (id, experiment): (2, 1) ------- 
-fileName: Backtest_ITM_OoS_statistics
-alpha: 0.05
-nEps: 3
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 3)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01
-trainingSize: 504
-recover: 2,5,87,21
-
-
-------- (id, experiment): (3, 1) ------- 
+------- (id, experiment): (3, 1) -------
 fileName: Backtest_ITM_Trajectories
 alpha: 0.05
 nEps: 51
@@ -246,7 +12,7 @@ trainingSize: 504
 recover: 5,5369,4
 
 
-------- (id, experiment): (3, 1) ------- 
+------- (id, experiment): (3, 1) -------
 fileName: Backtest_ITM_Wasserstein
 alpha: 0.05
 nEps: 51
@@ -259,20 +25,7 @@ trainingSize: 504
 recover: 5,87
 
 
-------- (id, experiment): (1, 1) ------- 
-fileName: Backtest_ITM_trajectories
-alpha: 0.05
-nEps: 51
-nBetas: 1
-nRhos: 1
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 51)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.2
-trainingSize: 504
-recover: 5,5369,4
-
-
-------- (id, experiment): (3, 1) ------- 
+------- (id, experiment): (3, 1) -------
 fileName: Backtest_ITM_epsOpt
 alpha: 0.05
 nEps: 51
@@ -285,7 +38,7 @@ trainingSize: 504
 recover: 5,87
 
 
-------- (id, experiment): (3, 1) ------- 
+------- (id, experiment): (3, 1) -------
 fileName: Backtest_ITM_IS_statistics
 alpha: 0.05
 nEps: 51
@@ -298,7 +51,7 @@ trainingSize: 504
 recover: 2,5,87,21
 
 
-------- (id, experiment): (3, 1) ------- 
+------- (id, experiment): (3, 1) -------
 fileName: Backtest_ITM_OoS_statistics
 alpha: 0.05
 nEps: 51
@@ -310,134 +63,133 @@ rhoCollection: 0.2
 trainingSize: 504
 recover: 2,5,87,21
 
-
-------- (id, experiment): (1, 1) ------- 
+------- (id, experiment): (2, 1) -------
 fileName: Frontier_Backtest_ITM_Trajectories
-alpha: 0
-nEps: 11
+alpha: 0.05
+nEps: 31
 nBetas: 1
-nRhos: 2
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 11)), axis=0)
+nRhos: 25
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 31)), axis=0)
 betaCollection: 0.8
-rhoCollection: 0.01,5.01187
+rhoCollection: 0.01,0.01296,0.01679,0.02175,0.02818,0.03652,0.04732,0.06131,0.07943,0.10292,0.13335,0.17278,0.22387,0.29007,0.37584,0.48697,0.63096,0.81752,1.05925,1.37246,1.77828,2.30409,2.98538,3.86812,5.01187
 trainingSize: 252
-recover: 2,2,5369,4
+recover: 25,2,5369,4
 
 
-------- (id, experiment): (1, 1) ------- 
+------- (id, experiment): (2, 1) -------
 fileName: Frontier_Backtest_ITM_epsOpt
-alpha: 0
-nEps: 11
+alpha: 0.05
+nEps: 31
 nBetas: 1
-nRhos: 2
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 11)), axis=0)
+nRhos: 25
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 31)), axis=0)
 betaCollection: 0.8
-rhoCollection: 0.01,5.01187
+rhoCollection: 0.01,0.01296,0.01679,0.02175,0.02818,0.03652,0.04732,0.06131,0.07943,0.10292,0.13335,0.17278,0.22387,0.29007,0.37584,0.48697,0.63096,0.81752,1.05925,1.37246,1.77828,2.30409,2.98538,3.86812,5.01187
 trainingSize: 252
-recover: 2,2,87
+recover: 25,2,87
 
 
-------- (id, experiment): (1, 1) ------- 
+------- (id, experiment): (1, 1) -------
 fileName: Frontier_Backtest_ITM_trajectories
-alpha: 0
-nEps: 11
+alpha: 0.05
+nEps: 31
 nBetas: 1
-nRhos: 2
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 11)), axis=0)
+nRhos: 25
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 31)), axis=0)
 betaCollection: 0.8
-rhoCollection: 0.01,5.01187
+rhoCollection: 0.01,0.01296,0.01679,0.02175,0.02818,0.03652,0.04732,0.06131,0.07943,0.10292,0.13335,0.17278,0.22387,0.29007,0.37584,0.48697,0.63096,0.81752,1.05925,1.37246,1.77828,2.30409,2.98538,3.86812,5.01187
 trainingSize: 252
-recover: 2,2,5369,4
+recover: 25,2,5369,4
 
 
-------- (id, experiment): (1, 1) ------- 
+------- (id, experiment): (2, 1) -------
 fileName: Frontier_Backtest_ITM_IS_statistics
-alpha: 0
-nEps: 11
+alpha: 0.05
+nEps: 31
 nBetas: 1
-nRhos: 2
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 11)), axis=0)
+nRhos: 25
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 31)), axis=0)
 betaCollection: 0.8
-rhoCollection: 0.01,5.01187
+rhoCollection: 0.01,0.01296,0.01679,0.02175,0.02818,0.03652,0.04732,0.06131,0.07943,0.10292,0.13335,0.17278,0.22387,0.29007,0.37584,0.48697,0.63096,0.81752,1.05925,1.37246,1.77828,2.30409,2.98538,3.86812,5.01187
 trainingSize: 252
-recover: 2,2,2,87,21
+recover: 2,25,2,87,21
 
 
-------- (id, experiment): (1, 1) ------- 
+------- (id, experiment): (2, 1) -------
 fileName: Frontier_Backtest_ITM_OoS_statistics
-alpha: 0
-nEps: 11
-nBetas: 1
-nRhos: 2
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 11)), axis=0)
-betaCollection: 0.8
-rhoCollection: 0.01,5.01187
-trainingSize: 252
-recover: 2,2,2,87,21
-
-
-------- (id, experiment): (1, 1) ------- 
-fileName: Frontier_Backtest_ITM_Trajectories
-alpha: 0
+alpha: 0.05
 nEps: 31
 nBetas: 1
-nRhos: 2
+nRhos: 25
 epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 31)), axis=0)
 betaCollection: 0.8
-rhoCollection: 0.01,5.01187
+rhoCollection: 0.01,0.01296,0.01679,0.02175,0.02818,0.03652,0.04732,0.06131,0.07943,0.10292,0.13335,0.17278,0.22387,0.29007,0.37584,0.48697,0.63096,0.81752,1.05925,1.37246,1.77828,2.30409,2.98538,3.86812,5.01187
 trainingSize: 252
-recover: 2,2,5369,4
+recover: 2,25,2,87,21
 
 
-------- (id, experiment): (1, 1) ------- 
-fileName: Frontier_Backtest_ITM_epsOpt
-alpha: 0
-nEps: 31
+------- (id, experiment): (4, 1) ------- 
+fileName: Backtest_ITM_Trajectories
+alpha: 0.05
+nEps: 51
 nBetas: 1
-nRhos: 2
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 31)), axis=0)
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 51)), axis=0)
 betaCollection: 0.8
-rhoCollection: 0.01,5.01187
-trainingSize: 252
-recover: 2,2,87
+rhoCollection: 2
+trainingSize: 504
+recover: 5,5369,4
 
 
-------- (id, experiment): (1, 1) ------- 
-fileName: Frontier_Backtest_ITM_trajectories
-alpha: 0
-nEps: 31
+------- (id, experiment): (4, 1) ------- 
+fileName: Backtest_ITM_Wasserstein
+alpha: 0.05
+nEps: 51
 nBetas: 1
-nRhos: 2
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 31)), axis=0)
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 51)), axis=0)
 betaCollection: 0.8
-rhoCollection: 0.01,5.01187
-trainingSize: 252
-recover: 2,2,5369,4
+rhoCollection: 2
+trainingSize: 504
+recover: 5,87
 
 
-------- (id, experiment): (1, 1) ------- 
-fileName: Frontier_Backtest_ITM_IS_statistics
-alpha: 0
-nEps: 31
+------- (id, experiment): (4, 1) ------- 
+fileName: Backtest_ITM_epsOpt
+alpha: 0.05
+nEps: 51
 nBetas: 1
-nRhos: 2
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 31)), axis=0)
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 51)), axis=0)
 betaCollection: 0.8
-rhoCollection: 0.01,5.01187
-trainingSize: 252
-recover: 2,2,2,87,21
+rhoCollection: 2
+trainingSize: 504
+recover: 5,87
 
 
-------- (id, experiment): (1, 1) ------- 
-fileName: Frontier_Backtest_ITM_OoS_statistics
-alpha: 0
-nEps: 31
+------- (id, experiment): (4, 1) ------- 
+fileName: Backtest_ITM_IS_statistics
+alpha: 0.05
+nEps: 51
 nBetas: 1
-nRhos: 2
-epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 31)), axis=0)
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 51)), axis=0)
 betaCollection: 0.8
-rhoCollection: 0.01,5.01187
-trainingSize: 252
-recover: 2,2,2,87,21
+rhoCollection: 2
+trainingSize: 504
+recover: 2,5,87,21
+
+
+------- (id, experiment): (4, 1) ------- 
+fileName: Backtest_ITM_OoS_statistics
+alpha: 0.05
+nEps: 51
+nBetas: 1
+nRhos: 1
+epsCollection: np.concatenate(([0], 10**np.linspace(-9, 1, 51)), axis=0)
+betaCollection: 0.8
+rhoCollection: 2
+trainingSize: 504
+recover: 2,5,87,21
 
 
