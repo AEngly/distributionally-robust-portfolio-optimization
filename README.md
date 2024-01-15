@@ -1,5 +1,4 @@
-## Portfolio Optimization
-## A Data-Centric Approach with Distributional Robustness
+## Portfolio Optimization: A Data-Centric Approach with Distributional Robustness
 
 Author: Andreas Engly
 Date: 15-01-2024
