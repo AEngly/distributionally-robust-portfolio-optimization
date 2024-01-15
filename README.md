@@ -7,7 +7,8 @@ This repository will hold the implementations and data sources related to my mas
 
 ## 1. Construction of Dataset for Prices of S&P 500 Constituents
 
-Source [1]: https://en.wikipedia.org/wiki/List_of_S%26P_500_companies \\
+Source [1]: https://en.wikipedia.org/wiki/List_of_S%26P_500_companies
+
 Source [2]: https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202401
 
 Relevant files: DATASET_Construction.py and DATASET_Combine.py
