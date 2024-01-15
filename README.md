@@ -51,7 +51,7 @@ Plots on the basis of the results are saved in ResultsPlots/Chapter4_TrackingCVa
 In this part, I compare sample average approximation (SAA) and a Wasserstein-based distributionally robust counterpart (W-DRC) in a regular backtest. 
 The Wasserstein radii is selected with a hold-out method, and the results performance is compared over the entire period. In addition, an efficient frontier is generated for RAERM. 
 
-Files: EXPERIMENT_Backtest_Dynamic_RAERM.py and EXPERIMENT_Backtest_Dynamic_ITM.py
+Files: EXPERIMENT_Backtest_Dynamic_RAERM.py, EXPERIMENT_Backtest_Dynamic_ITM.py, EXPERIMENT_Backtest_Frontier_RAERM.py, and EXPERIMENT_Backtest_Frontier_ITM.py
 Output files are saved to: Results/Backtest
 
 Details of used parameters can be found in the above directories ExperimentLog.txt.
