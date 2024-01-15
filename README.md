@@ -5,7 +5,7 @@ Date: 15-01-2024
 
 This repository will hold the implementations and data sources related to my master thesis in "MSc. in Mathematical Modelling and Computation" at Technical University of Denmark (DTU). 
 
-## Construction of Dataset for Prices of S&P 500 Constituents
+## 1. Construction of Dataset for Prices of S&P 500 Constituents
 
 Source [1]: https://en.wikipedia.org/wiki/List_of_S%26P_500_companies
 Source [2]: https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202401
@@ -22,7 +22,7 @@ The total set of tickers are found as the union of all days in "ConstituentInfor
 Disadvantage: Some tickers cannot be obtained. In addition, to backtest I need to make a intersection of assets over a fixex periods excluding backrupcies, delistings and so forth. Prone to survivorship bias.
 Advantage: Cheap to construct.
 
-## Construction of Models
+## 2. Construction of Models
 
 1. Risk-Adjusted Excess Return Model (RAERM)
 
@@ -33,7 +33,7 @@ Goal is to obtain best possible return above SP&500. It is a biobjective linear 
 This model attemps to track the index and fixed targets above it. It is based on the mean absolute deviation (MAD) and CVaR of MAD.
 See implementations in EITP/Models/ITMDRO.py and EITP/Models/ITMSAA.py.
 
-## Experiment of Wasserstein-Based Distributionally Robust Counterparts (W-DRC)
+## 3. Experiment of Wasserstein-Based Distributionally Robust Counterparts (W-DRC)
 
 In this part, I compare sample average approximation (SAA) and a Wasserstein-based distributionally robust counterpart (W-DRC). 
 The first experiments investigate how portfolio weights and out-of-sample performance is affected. It also looks at how Wasserstein radii can be selected with hold-out. 
@@ -45,7 +45,7 @@ Details of used parameters can be found in the above directories ExperimentLog.t
 
 Plots on the basis of the results are saved in ResultsPlots/Chapter4_TrackingCVaR and ResultsPlots/Chapter5_ExcessCVaR. These are generated with ITM (Visualization of Experiments).ipynb and RAERM (Visualization of Experiments).ipynb.
 
-## Backtest of W-DRC RAERM and W-DRC ITM
+## 4. Backtest of W-DRC RAERM and W-DRC ITM
 
 In this part, I compare sample average approximation (SAA) and a Wasserstein-based distributionally robust counterpart (W-DRC) in a regular backtest. 
 The Wasserstein radii is selected with a hold-out method, and the results performance is compared over the entire period. In addition, an efficient frontier is generated for RAERM. 
